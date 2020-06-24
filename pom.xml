@@ -80,9 +80,7 @@
 				<version>5.3.2</version>
 				<configuration>
 					<failBuildOnCVSS>8</failBuildOnCVSS>
-					<suppressionFiles>
-						<suppressionFile>owasp-dependency-check-supressions.xml</suppressionFile>
-					</suppressionFiles>
+					<suppressionFile>owasp-dependency-check-supressions.xml</suppressionFile>
 				</configuration>
 				<executions>
 					<execution>
