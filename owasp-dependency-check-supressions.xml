@@ -4,7 +4,28 @@
 		<notes><![CDATA[
       file name: spring-security-core-5.3.3.RELEASE.jar
       ]]></notes>
-		<packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@.*$</packageUrl>
+		<packageUrl regex="true">^pkg:maven/org\.springframework\.security/spring\-security\-core@5.3.3.RELEASE$</packageUrl>
 		<cpe>cpe:/a:pivotal_software:spring_security</cpe>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: keycloak-core-9.0.3.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/org\.keycloak/keycloak\-core@9.0.3$</packageUrl>
+		<cve>CVE-2020-1714</cve>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: keycloak-common-9.0.3.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/org\.keycloak/keycloak\-common@9.0.3$</packageUrl>
+		<cve>CVE-2020-1714</cve>
+	</suppress>
+	<suppress>
+		<notes><![CDATA[
+   file name: keycloak-admin-client-9.0.3.jar
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/org\.keycloak/keycloak\-admin\-client@9.0.3$</packageUrl>
+		<cve>CVE-2020-1714</cve>
 	</suppress>
 </suppressions>

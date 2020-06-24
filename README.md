@@ -123,4 +123,11 @@ public class KeycloakClientMigrations {
 	}
 }
 ```
+
+## Development FAQ
+
+### The dependency-check (OWASP) fails on github but not locally
+Make sure to clear your vulnerability cache of the maven dependency check plugin locally.
+You can do this by executing `./mvnw dependency-check:purge`.
+If you now rerun the build locally it will re-populate the vulnerability database and should fail the build. 
  
