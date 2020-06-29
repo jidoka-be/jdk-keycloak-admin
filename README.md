@@ -1,3 +1,5 @@
+![](https://github.com/jidoka-be/jdk-keycloak-admin/workflows/Java%20CI%20with%20Maven/badge.svg)
+
 # jdk-keycloak-admin
 
 Spring auto-configured library to add keycloak admin support.
