@@ -40,7 +40,7 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: Prepare release
-        run: export GPG_TTY=$(tty) ./mvnw --batch-mode mvn release:clean release:prepare -DreleaseVersion=${{ steps.get_version.outputs.VERSION }} -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
+        run: export GPG_TTY=$(tty) && ./mvnw --batch-mode mvn release:clean release:prepare -DreleaseVersion=${{ steps.get_version.outputs.VERSION }} -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
       - name: Perform release
-        run: export GPG_TTY=$(tty) ./mvnw --batch-mode mvn release:perform -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
+        run: export GPG_TTY=$(tty) && ./mvnw --batch-mode mvn release:perform -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
 
