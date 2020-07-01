@@ -5,7 +5,7 @@ name: deploy
 
 on:
   push:
-    tags:
+    branch:
       - '[0-9]+\.[0-9]+\.[0-9]+'
 
 jobs:
@@ -38,7 +38,7 @@ jobs:
           servers: '[{ "id": "ossrh", "username": "${{ secrets.OSSRH_USER }}", "password": "${{ secrets.OSSRH_PASSWORD }}" }]'
       - name: Get the version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/heads\//}
       - name: Prepare release
         run: export GPG_TTY=$(tty) && ./mvnw --batch-mode release:clean release:prepare -DreleaseVersion=${{ steps.get_version.outputs.VERSION }} -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
       - name: Perform release
