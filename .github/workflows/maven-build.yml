@@ -5,9 +5,9 @@ name: build
 
 on:
   push:
-    branches: [ master ]
+    branches: [ develop, master ]
   pull_request:
-    branches: [ master ]
+    branches: [ develop, master ]
 
 jobs:
   build:
@@ -16,6 +16,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Get branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        id: get_branch
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -23,9 +31,8 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Build with Maven
-        run: ./mvnw --batch-mode clean verify
+      - name: Build artifact
+        run: echo 'Building' && ./mvnw --batch-mode clean verify
+      - if: steps.get_branch.outputs.branch == 'master'
+        name: Publish to Central Repository
+        run: echo 'Deploying' && ./mvnw --no-transfer-progress --batch-mode clean deploy -DskipTests -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
