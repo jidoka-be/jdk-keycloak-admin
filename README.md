@@ -1,4 +1,4 @@
-![](https://github.com/jidoka-be/jdk-keycloak-admin/workflows/Java%20CI%20with%20Maven/badge.svg)
+![](https://github.com/jidoka-be/jdk-keycloak-admin/workflows/build/badge.svg)
 
 # jdk-keycloak-admin
 
