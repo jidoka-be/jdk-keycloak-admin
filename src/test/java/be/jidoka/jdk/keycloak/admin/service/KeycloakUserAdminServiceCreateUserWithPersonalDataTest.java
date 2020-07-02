@@ -3,6 +3,7 @@ package be.jidoka.jdk.keycloak.admin.service;
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 				.build();
 		String userId = keycloakUserAdminService.createUser(createUserRequest);
 
-		User user = keycloakUserAdminService.getUser(GetUserRequest.withoutClientRoles(userId));
+		User user = keycloakUserAdminService.getUser(GetUserRequestBuilder.builder().userId(userId).build());
 
 		assertThat(user.getId()).isNotNull().isEqualTo(userId);
 		assertThat(user.getUsername()).isNotNull().isEqualTo(USERNAME);

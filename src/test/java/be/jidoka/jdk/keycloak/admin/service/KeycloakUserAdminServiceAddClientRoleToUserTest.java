@@ -6,6 +6,7 @@ import be.jidoka.jdk.keycloak.admin.domain.Client;
 import be.jidoka.jdk.keycloak.admin.domain.CreateClientRoleBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,7 +55,7 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 
 	@Test
 	public void addsTheRoleToTheUser() {
-		GetUserRequest getUserRequest = GetUserRequest.withClientRoles(userId, clientId);
+		GetUserRequest getUserRequest = GetUserRequestBuilder.builder().userId(userId).clientId(clientId).build();
 
 		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).isEmpty();
 

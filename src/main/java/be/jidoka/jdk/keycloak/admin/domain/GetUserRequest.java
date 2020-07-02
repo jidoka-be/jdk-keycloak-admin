@@ -1,28 +1,10 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
-public class GetUserRequest {
+import java.util.Optional;
 
-	private final String userId;
-	private final String clientId;
+public interface GetUserRequest {
 
-	private GetUserRequest(String userId, String clientId) {
-		this.userId = userId;
-		this.clientId = clientId;
-	}
+	String getUserId();
 
-	public static GetUserRequest withoutClientRoles(String userId) {
-		return new GetUserRequest(userId, null);
-	}
-
-	public static GetUserRequest withClientRoles(String userId, String clientId) {
-		return new GetUserRequest(userId, clientId);
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public String getClientId() {
-		return clientId;
-	}
+	Optional<String> getClientId();
 }

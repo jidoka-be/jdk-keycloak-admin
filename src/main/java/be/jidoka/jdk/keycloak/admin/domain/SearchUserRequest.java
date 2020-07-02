@@ -2,35 +2,13 @@ package be.jidoka.jdk.keycloak.admin.domain;
 
 import org.springframework.data.domain.Pageable;
 
-public class SearchUserRequest {
+import java.util.Optional;
 
-	private final String search;
-	private final String clientId;
-	private final Pageable pageable;
+public interface SearchUserRequest {
 
-	private SearchUserRequest(String search, String clientId, Pageable pageable) {
-		this.search = search;
-		this.clientId = clientId;
-		this.pageable = pageable;
-	}
+	String getSearch();
 
-	public static SearchUserRequest withoutClientRoles(String search, Pageable pageRequest) {
-		return new SearchUserRequest(search, null, pageRequest);
-	}
+	Optional<String> getClientId();
 
-	public static SearchUserRequest withClientRoles(String search, String clientId, Pageable pageRequest) {
-		return new SearchUserRequest(search, clientId, pageRequest);
-	}
-
-	public String getSearch() {
-		return search;
-	}
-
-	public String getClientId() {
-		return clientId;
-	}
-
-	public Pageable getPageable() {
-		return pageable;
-	}
+	Pageable getPageable();
 }

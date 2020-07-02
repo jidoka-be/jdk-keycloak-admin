@@ -44,7 +44,7 @@ public class KeycloakUserAdminService {
 
 	public Page<User> getUsers(GetUsersRequest request) {
 		Pageable pageable = request.getPageable();
-		String clientId = request.getClientId();
+		String clientId = request.getClientId().orElse(null);
 
 		return retrieveUsers(
 				() -> usersResource.list(getPage(pageable), getPageSize(pageable)),
@@ -55,7 +55,7 @@ public class KeycloakUserAdminService {
 
 	public Page<User> searchUsers(SearchUserRequest request) {
 		Pageable pageable = request.getPageable();
-		String clientId = request.getClientId();
+		String clientId = request.getClientId().orElse(null);
 
 		return retrieveUsers(
 				() -> usersResource.search(request.getSearch(), getPage(pageable), getPageSize(pageable)),
@@ -65,7 +65,7 @@ public class KeycloakUserAdminService {
 	}
 
 	public User getUser(GetUserRequest request) {
-		String clientId = request.getClientId();
+		String clientId = request.getClientId().orElse(null);
 		UserResource userResource = usersResource.get(request.getUserId());
 		UserRepresentation userRepresentation = enhanceWithClientRoles(userResource.toRepresentation(), clientId);
 
