@@ -5,6 +5,7 @@ import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUserBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.Client;
 import be.jidoka.jdk.keycloak.admin.domain.CreateClientRoleBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUserBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,7 +61,9 @@ class KeycloakUserAdminServiceRemoveClientRoleFromUserTest extends IntegrationTe
 
 	@Test
 	public void addsTheRoleToTheUser() {
-		assertThat(keycloakUserAdminService.getUser(userId, clientId).getClientRoles()).containsExactly(ROLE_NAME);
+		GetUserRequest getUserRequest = new GetUserRequest(userId, clientId);
+
+		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).containsExactly(ROLE_NAME);
 
 		RemoveClientRoleFromUserBuilder removeClientRoleFromUserRequest = RemoveClientRoleFromUserBuilder.builder()
 				.clientId(clientId)
@@ -68,7 +71,9 @@ class KeycloakUserAdminServiceRemoveClientRoleFromUserTest extends IntegrationTe
 				.userId(userId)
 				.build();
 		keycloakUserAdminService.removeClientRoleFromUser(removeClientRoleFromUserRequest);
-		User user = keycloakUserAdminService.getUser(userId, clientId);
+
+		User user = keycloakUserAdminService.getUser(getUserRequest);
+
 		assertThat(user.getClientRoles()).isEmpty();
 	}
 }

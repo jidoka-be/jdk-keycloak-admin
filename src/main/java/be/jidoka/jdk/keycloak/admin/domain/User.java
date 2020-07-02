@@ -5,9 +5,9 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-import static java.util.Collections.emptyList;
-import static java.util.Collections.unmodifiableList;
+import static java.util.Collections.unmodifiableSet;
 
 public class User {
 
@@ -18,25 +18,23 @@ public class User {
 	private final String firstName;
 	private final String lastName;
 	private final String email;
+	private final boolean enabled;
 	private final String pictureUrl;
-	private final List<String> clientRoles;
+	private final Set<String> clientRoles;
 
-	public User(String userId, String username, String firstName, String lastName, String email, Map<String, List<String>> attributes, List<String> clientRoles) {
+	public User(String userId, String username, String firstName, String lastName, String email, boolean enabled, Map<String, List<String>> attributes, Set<String> clientRoles) {
 		this.userId = userId;
 		this.username = username;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
+		this.enabled = enabled;
 		if (attributes != null && attributes.containsKey(PICTURE_URL_ATTRIBUTE)) {
 			this.pictureUrl = attributes.get(PICTURE_URL_ATTRIBUTE).get(0);
 		} else {
 			this.pictureUrl = null;
 		}
 		this.clientRoles = clientRoles;
-	}
-
-	public User(String userId, String username, String firstName, String lastName, String email, Map<String, List<String>> attributes) {
-		this(userId, username, firstName, lastName, email, attributes, emptyList());
 	}
 
 	public String getUserId() {
@@ -59,12 +57,16 @@ public class User {
 		return email;
 	}
 
+	public boolean isEnabled() {
+		return enabled;
+	}
+
 	public String getPictureUrl() {
 		return pictureUrl;
 	}
 
-	public List<String> getClientRoles() {
-		return unmodifiableList(clientRoles);
+	public Set<String> getClientRoles() {
+		return unmodifiableSet(clientRoles);
 	}
 
 	@Override
