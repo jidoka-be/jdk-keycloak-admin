@@ -21,7 +21,6 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -151,12 +150,10 @@ public class KeycloakUserAdminService {
 	}
 
 	private Map<String, List<String>> getPersonalData(CreateUser createUser) {
-		Map<String, List<String>> personalData = new HashMap<>();
+		Map<String, List<String>> personalData = new HashMap<>(createUser.getPersonalData());
 
-		Optional.ofNullable(createUser.getPersonalData())
-				.ifPresent(personalData::putAll);
-		Optional.ofNullable(createUser.getPictureUrl())
-				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(createUser.getPictureUrl())));
+		createUser.getPictureUrl()
+				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(pictureUrl)));
 
 		return personalData;
 	}
