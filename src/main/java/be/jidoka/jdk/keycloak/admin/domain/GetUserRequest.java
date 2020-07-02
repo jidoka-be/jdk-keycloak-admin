@@ -5,9 +5,17 @@ public class GetUserRequest {
 	private final String userId;
 	private final String clientId;
 
-	public GetUserRequest(String userId, String clientId) {
+	private GetUserRequest(String userId, String clientId) {
 		this.userId = userId;
 		this.clientId = clientId;
+	}
+
+	public static GetUserRequest withoutClientRoles(String userId) {
+		return new GetUserRequest(userId, null);
+	}
+
+	public static GetUserRequest withClientRoles(String userId, String clientId) {
+		return new GetUserRequest(userId, clientId);
 	}
 
 	public String getUserId() {

@@ -37,7 +37,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 				.build();
 		String userId = keycloakUserAdminService.createUser(createUserRequest);
 
-		User user = keycloakUserAdminService.getUser(new GetUserRequest(userId, null));
+		User user = keycloakUserAdminService.getUser(GetUserRequest.withoutClientRoles(userId));
 
 		assertThat(user.getId()).isNotNull().isEqualTo(userId);
 		assertThat(user.getUsername()).isNotNull().isEqualTo(USERNAME);

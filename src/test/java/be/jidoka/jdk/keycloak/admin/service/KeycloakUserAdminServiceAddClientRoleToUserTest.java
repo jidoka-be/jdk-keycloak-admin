@@ -54,7 +54,7 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 
 	@Test
 	public void addsTheRoleToTheUser() {
-		GetUserRequest getUserRequest = new GetUserRequest(userId, clientId);
+		GetUserRequest getUserRequest = GetUserRequest.withClientRoles(userId, clientId);
 
 		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).isEmpty();
 
