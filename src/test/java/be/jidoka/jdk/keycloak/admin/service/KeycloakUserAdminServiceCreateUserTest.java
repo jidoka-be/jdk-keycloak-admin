@@ -5,7 +5,6 @@ import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Collection;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;

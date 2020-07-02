@@ -1,6 +1,5 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
-import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRole;
 import lombok.Builder;
 import lombok.Getter;
 
