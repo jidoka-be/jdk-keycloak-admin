@@ -7,6 +7,7 @@
 
 	<name>JDK Keycloak Admin</name>
 	<description>A library to administer Keycloak from your application</description>
+	<url>https://github.com/jidoka-be/jdk-keycloak-admin</url>
 
 	<licenses>
 		<license>
@@ -17,9 +18,26 @@
 	</licenses>
 
 	<scm>
+		<connection>scm:git:https://github.com/jidoka-be/jdk-keycloak-admin.git</connection>
 		<developerConnection>scm:git:https://github.com/jidoka-be/jdk-keycloak-admin.git</developerConnection>
 		<tag>HEAD</tag>
+		<url>https://github.com/jidoka-be/jdk-keycloak-admin</url>
 	</scm>
+
+	<developers>
+		<developer>
+			<id>jidoka</id>
+			<name>Jidoka</name>
+			<email>opensource@jidoka.be</email>
+			<url>https://www.jidoka.be/</url>
+			<organization>Jidoka</organization>
+			<organizationUrl>https://www.jidoka.be/</organizationUrl>
+			<roles>
+				<role>developer</role>
+			</roles>
+			<timezone>Europe/Brussels</timezone>
+		</developer>
+	</developers>
 
 	<distributionManagement>
 		<snapshotRepository>
