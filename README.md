@@ -8,6 +8,10 @@ Spring auto-configured library to add keycloak admin support.
 **It is important that this library is used with that version of Keycloak.**
 **Future releases of this library can support other versions of Keycloak if dependency versions of Keycloak and the integration test is adapted.**
 
+## Availabilty
+
+All releases can be retrieved from Sonatype: https://search.maven.org/artifact/be.jidoka/jdk-keycloak-admin
+
 ## Features
 
 ### Clients
