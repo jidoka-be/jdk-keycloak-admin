@@ -2,8 +2,11 @@ package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
+import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequestBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 
 import java.util.Collections;
 
@@ -23,20 +26,21 @@ class KeycloakUserAdminServiceCreateUserTest extends IntegrationTest {
 
 	@Test
 	public void createsTheUser() {
-		assertThat(keycloakUserAdminService.getUsers()).isEmpty();
-
+		GetUsersRequest getUsersRequest = GetUsersRequestBuilder.builder().pageable(Pageable.unpaged()).build();
 		CreateUserBuilder createUserRequest = CreateUserBuilder.builder()
-				.firstname(FIRST_NAME)
+				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
 				.username(USERNAME)
 				.pictureUrl(PICTURE_URL)
 				.build();
+
+		assertThat(keycloakUserAdminService.getUsers(getUsersRequest)).isEmpty();
+
 		keycloakUserAdminService.createUser(createUserRequest);
 
-		assertThat(keycloakUserAdminService.getUsers())
+		assertThat(keycloakUserAdminService.getUsers(getUsersRequest))
 				.extracting("username", "firstName", "lastName", "email", "pictureUrl", "clientRoles")
-				.contains(tuple(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PICTURE_URL, Collections.emptyList()));
+				.contains(tuple(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PICTURE_URL, Collections.emptySet()));
 	}
-
 }

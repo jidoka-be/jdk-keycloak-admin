@@ -5,6 +5,8 @@ import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUserBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.Client;
 import be.jidoka.jdk.keycloak.admin.domain.CreateClientRoleBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,7 +45,7 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 				.roleName(ROLE_NAME)
 				.build());
 		userId = keycloakUserAdminService.createUser(CreateUserBuilder.builder()
-				.firstname(FIRST_NAME)
+				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
 				.username(USERNAME)
@@ -53,15 +55,20 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 
 	@Test
 	public void addsTheRoleToTheUser() {
-		assertThat(keycloakUserAdminService.getUser(userId, clientId).getClientRoles()).isEmpty();
+		GetUserRequest getUserRequest = GetUserRequestBuilder.builder().userId(userId).clientId(clientId).build();
+
+		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).isEmpty();
 
 		AddClientRoleToUserBuilder addClientRoleToUserRequest = AddClientRoleToUserBuilder.builder()
 				.userId(userId)
 				.clientId(clientId)
 				.roleName(ROLE_NAME)
 				.build();
+
 		keycloakUserAdminService.addClientRoleToUser(addClientRoleToUserRequest);
-		User user = keycloakUserAdminService.getUser(userId, clientId);
+
+		User user = keycloakUserAdminService.getUser(getUserRequest);
+
 		assertThat(user.getClientRoles()).containsExactly(ROLE_NAME);
 	}
 }

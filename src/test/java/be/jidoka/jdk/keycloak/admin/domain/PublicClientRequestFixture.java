@@ -2,7 +2,9 @@ package be.jidoka.jdk.keycloak.admin.domain;
 
 import java.util.List;
 
-public class PublicClientRequestFixture {
+public final class PublicClientRequestFixture {
+
+	private PublicClientRequestFixture() { }
 
 	public static CreatePublicClient aPublicClientRequest = new CreatePublicClientRequest();
 
