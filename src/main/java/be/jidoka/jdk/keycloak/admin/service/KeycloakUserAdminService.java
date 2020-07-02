@@ -33,12 +33,10 @@ public class KeycloakUserAdminService {
 
 	private final UsersResource usersResource;
 	private final ClientsResource clientsResource;
-	private final UserFactory userFactory;
 
 	public KeycloakUserAdminService(UsersResource usersResource, ClientsResource clientsResource) {
 		this.usersResource = usersResource;
 		this.clientsResource = clientsResource;
-		this.userFactory = new UserFactory();
 	}
 
 	public Page<User> getUsers(GetUsersRequest request) {
@@ -68,7 +66,7 @@ public class KeycloakUserAdminService {
 		UserResource userResource = usersResource.get(request.getUserId());
 		UserRepresentation userRepresentation = enhanceWithClientRoles(userResource.toRepresentation(), clientId);
 
-		return userFactory.create(userRepresentation, clientId);
+		return new User(userRepresentation, clientId);
 	}
 
 	public String createUser(CreateUser createUser) {
@@ -125,7 +123,7 @@ public class KeycloakUserAdminService {
 		List<User> users = userRepresentations.get()
 				.stream()
 				.map(userRepresentation -> enhanceWithClientRoles(userRepresentation, clientId))
-				.map(userRepresentation -> userFactory.create(userRepresentation, clientId))
+				.map(userRepresentation -> new User(userRepresentation, clientId))
 				.collect(toList());
 
 		return new PageImpl<>(users, pageable, usersResource.count());

@@ -1,13 +1,17 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.keycloak.representations.idm.UserRepresentation;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
+import static java.util.Collections.emptySet;
 import static java.util.Collections.unmodifiableSet;
 
 public class User {
@@ -23,15 +27,15 @@ public class User {
 	private final Map<String, List<String>> attributes;
 	private final Set<String> clientRoles;
 
-	private User(Builder builder) {
-		this.id = builder.id;
-		this.username = builder.username;
-		this.firstName = builder.firstName;
-		this.lastName = builder.lastName;
-		this.email = builder.email;
-		this.enabled = builder.enabled;
-		this.attributes = builder.attributes;
-		this.clientRoles = builder.clientRoles;
+	public User(UserRepresentation userRepresentation, String clientId) {
+		this.id = userRepresentation.getId();
+		this.username = userRepresentation.getUsername();
+		this.firstName = userRepresentation.getFirstName();
+		this.lastName = userRepresentation.getLastName();
+		this.email = userRepresentation.getEmail();
+		this.enabled = userRepresentation.isEnabled();
+		this.attributes = userRepresentation.getAttributes();
+		this.clientRoles = getClientRoles(userRepresentation.getClientRoles(), clientId);
 	}
 
 	public String getId() {
@@ -85,65 +89,11 @@ public class User {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	public static final class Builder {
-
-		private String id;
-		private String username;
-		private String firstName;
-		private String lastName;
-		private String email;
-		private boolean enabled;
-		private Map<String, List<String>> attributes;
-		private Set<String> clientRoles;
-
-		private Builder() {}
-
-		public static Builder anUserWith() {
-			return new Builder();
+	private Set<String> getClientRoles(Map<String, List<String>> clientRoles, String clientId) {
+		if (StringUtils.isBlank(clientId)) {
+			return emptySet();
 		}
 
-		public Builder id(String id) {
-			this.id = id;
-			return this;
-		}
-
-		public Builder username(String username) {
-			this.username = username;
-			return this;
-		}
-
-		public Builder firstName(String firstName) {
-			this.firstName = firstName;
-			return this;
-		}
-
-		public Builder lastName(String lastName) {
-			this.lastName = lastName;
-			return this;
-		}
-
-		public Builder email(String email) {
-			this.email = email;
-			return this;
-		}
-
-		public Builder enabled(boolean enabled) {
-			this.enabled = enabled;
-			return this;
-		}
-
-		public Builder attributes(Map<String, List<String>> attributes) {
-			this.attributes = attributes;
-			return this;
-		}
-
-		public Builder clientRoles(Set<String> clientRoles) {
-			this.clientRoles = clientRoles;
-			return this;
-		}
-
-		public User build() {
-			return new User(this);
-		}
+		return new HashSet<>(clientRoles.get(clientId));
 	}
 }
