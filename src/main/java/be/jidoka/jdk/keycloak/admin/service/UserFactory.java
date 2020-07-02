@@ -14,19 +14,19 @@ import static java.util.Collections.emptySet;
 class UserFactory {
 
 	public User create(UserRepresentation userRepresentation, String clientId) {
-		return new User(
-				userRepresentation.getId(),
-				userRepresentation.getUsername(),
-				userRepresentation.getFirstName(),
-				userRepresentation.getLastName(),
-				userRepresentation.getEmail(),
-				userRepresentation.isEnabled(),
-				userRepresentation.getAttributes(),
-				getRoles(userRepresentation.getClientRoles(), clientId)
-		);
+		return User.Builder.anUserWith()
+				.id(userRepresentation.getId())
+				.username(userRepresentation.getUsername())
+				.firstName(userRepresentation.getFirstName())
+				.lastName(userRepresentation.getLastName())
+				.email(userRepresentation.getEmail())
+				.enabled(userRepresentation.isEnabled())
+				.attributes(userRepresentation.getAttributes())
+				.clientRoles(getClientRoles(userRepresentation.getClientRoles(), clientId))
+				.build();
 	}
 
-	private Set<String> getRoles(Map<String, List<String>> clientRoles, String clientId) {
+	private Set<String> getClientRoles(Map<String, List<String>> clientRoles, String clientId) {
 		if (StringUtils.isBlank(clientId)) {
 			return emptySet();
 		}

@@ -19,7 +19,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 @ContextConfiguration(classes = { KeycloakAdminAutoConfiguration.class }, initializers = IntegrationTest.Initializer.class)
 @DirtiesContext //To initialize a new context and create a new Keycloak container for each test.
 public abstract class IntegrationTest {
-	
+
 	public static GenericContainer keycloak = new GenericContainer<>("jboss/keycloak:9.0.3")
 			.withExposedPorts(8080)
 			.withEnv("DB_VENDOR", "h2")

@@ -45,7 +45,7 @@ class KeycloakUserAdminServiceRemoveClientRoleFromUserTest extends IntegrationTe
 				.roleName(ROLE_NAME)
 				.build());
 		userId = keycloakUserAdminService.createUser(CreateUserBuilder.builder()
-				.firstname(FIRST_NAME)
+				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
 				.username(USERNAME)

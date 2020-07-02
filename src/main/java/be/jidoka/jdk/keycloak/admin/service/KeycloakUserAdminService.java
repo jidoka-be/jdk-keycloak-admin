@@ -18,19 +18,19 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import javax.ws.rs.core.Response;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static be.jidoka.jdk.keycloak.admin.domain.User.PICTURE_URL_ATTRIBUTE;
 import static java.util.Collections.singletonList;
-import static java.util.Collections.singletonMap;
 import static java.util.stream.Collectors.toList;
+import static org.keycloak.admin.client.CreatedResponseUtil.getCreatedId;
 
 public class KeycloakUserAdminService {
-
-	public static final String USER_ID_FROM_PATH_REGEX = ".*/([^/]+)$";
 
 	private final UsersResource usersResource;
 	private final ClientsResource clientsResource;
@@ -76,15 +76,14 @@ public class KeycloakUserAdminService {
 		UserRepresentation user = new UserRepresentation();
 		user.setEnabled(true);
 		user.setUsername(createUser.getUsername());
-		user.setFirstName(createUser.getFirstname());
+		user.setFirstName(createUser.getFirstName());
 		user.setLastName(createUser.getLastName());
 		user.setEmail(createUser.getEmail());
-		user.setAttributes(singletonMap(PICTURE_URL_ATTRIBUTE, singletonList(createUser.getPictureUrl())));
+		user.setAttributes(getPersonalData(createUser));
 
 		Response response = usersResource.create(user);
-		String userId = response.getLocation().getPath().replaceAll(USER_ID_FROM_PATH_REGEX, "$1");
 
-		return userId;
+		return getCreatedId(response);
 	}
 
 	public void addClientRoleToUser(AddClientRoleToUser addClientRoleToUser) {
@@ -149,5 +148,16 @@ public class KeycloakUserAdminService {
 		);
 
 		return userWithRoles;
+	}
+
+	private Map<String, List<String>> getPersonalData(CreateUser createUser) {
+		Map<String, List<String>> personalData = new HashMap<>();
+
+		Optional.ofNullable(createUser.getPersonalData())
+				.ifPresent(personalData::putAll);
+		Optional.ofNullable(createUser.getPictureUrl())
+				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(createUser.getPictureUrl())));
+
+		return personalData;
 	}
 }

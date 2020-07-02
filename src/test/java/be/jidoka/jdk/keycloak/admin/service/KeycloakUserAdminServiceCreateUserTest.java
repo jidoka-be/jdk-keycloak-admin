@@ -27,7 +27,7 @@ class KeycloakUserAdminServiceCreateUserTest extends IntegrationTest {
 	public void createsTheUser() {
 		GetUsersRequest getUsersRequest = GetUsersRequest.withoutClientRoles(Pageable.unpaged());
 		CreateUserBuilder createUserRequest = CreateUserBuilder.builder()
-				.firstname(FIRST_NAME)
+				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
 				.username(USERNAME)
