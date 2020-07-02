@@ -2,9 +2,9 @@ package be.jidoka.jdk.keycloak.admin.domain;
 
 public class Client {
 
-	private String id;
-	private String clientName;
-	private String clientId;
+	private final String id;
+	private final String clientName;
+	private final String clientId;
 
 	public Client(String id, String clientName, String clientId) {
 		this.id = id;

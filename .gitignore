@@ -1,3 +1,24 @@
+### Maven ###
+target/
+
+### IntelliJ IDEA ###
 .idea
+*.iws
+*.iml
+*.ipr
+out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/
+/src/main/docker/data/
+/src/main/docker/logs/
+
+### Lombok ###
 lombok.config
-target
