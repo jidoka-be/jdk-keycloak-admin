@@ -6,7 +6,9 @@ import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUser;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserRequest;
+import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
 import be.jidoka.jdk.keycloak.admin.domain.User;
+import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.resource.ClientsResource;
 import org.keycloak.admin.client.resource.UserResource;
@@ -21,6 +23,7 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -73,16 +76,23 @@ public class KeycloakUserAdminService {
 
 	public String createUser(CreateUser createUser) {
 		UserRepresentation user = new UserRepresentation();
-		user.setEnabled(true);
+		user.setEnabled(createUser.isEnabled());
 		user.setUsername(createUser.getUsername());
 		user.setFirstName(createUser.getFirstName());
 		user.setLastName(createUser.getLastName());
 		user.setEmail(createUser.getEmail());
 		user.setAttributes(getPersonalData(createUser));
+		user.setRequiredActions(getActions(createUser.getRequiredUserActions()));
 
 		Response response = usersResource.create(user);
 
 		return getCreatedId(response);
+	}
+
+	public void sendUserActionEmails(SendUserActionEmailRequest request) {
+		UserResource userResource = usersResource.get(request.getUserId());
+
+		userResource.executeActionsEmail(getActions(request.getUserActions()));
 	}
 
 	public void addClientRoleToUser(AddClientRoleToUser addClientRoleToUser) {
@@ -163,5 +173,12 @@ public class KeycloakUserAdminService {
 				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(pictureUrl)));
 
 		return personalData;
+	}
+
+	private List<String> getActions(Set<UserAction> userActions) {
+		return userActions
+				.stream()
+				.map(UserAction::name)
+				.collect(toList());
 	}
 }

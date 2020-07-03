@@ -35,6 +35,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 				.email(EMAIL)
 				.username(USERNAME)
 				.personalData(personalData)
+				.enabled(false)
 				.build();
 		String userId = keycloakUserAdminService.createUser(createUserRequest);
 
@@ -45,7 +46,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 		assertThat(user.getFirstName()).isNotNull().isEqualTo(FIRST_NAME);
 		assertThat(user.getLastName()).isNotNull().isEqualTo(LAST_NAME);
 		assertThat(user.getEmail()).isNotNull().isEqualTo(EMAIL);
-		assertThat(user.isEnabled()).isTrue();
+		assertThat(user.isEnabled()).isFalse();
 		assertThat(user.getClientRoles()).isNotNull().isEmpty();
 		assertThat(user.getPictureUrl()).isNull();
 		assertThat(user.getSingleAttribute(organisationIdPersonalDataKey).map(Long::valueOf)).isPresent().contains(10002L);

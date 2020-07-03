@@ -40,7 +40,7 @@ class KeycloakUserAdminServiceCreateUserTest extends IntegrationTest {
 		keycloakUserAdminService.createUser(createUserRequest);
 
 		assertThat(keycloakUserAdminService.getUsers(getUsersRequest))
-				.extracting("username", "firstName", "lastName", "email", "pictureUrl", "clientRoles")
-				.contains(tuple(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, PICTURE_URL, Collections.emptySet()));
+				.extracting("username", "firstName", "lastName", "email", "enabled", "pictureUrl", "clientRoles")
+				.contains(tuple(USERNAME, FIRST_NAME, LAST_NAME, EMAIL, true, PICTURE_URL, Collections.emptySet()));
 	}
 }
