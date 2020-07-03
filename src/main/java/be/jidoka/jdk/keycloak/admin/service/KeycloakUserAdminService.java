@@ -45,6 +45,7 @@ public class KeycloakUserAdminService {
 
 		return retrieveUsers(
 				() -> usersResource.list(getPage(pageable), getPageSize(pageable)),
+				usersResource::count,
 				clientId,
 				pageable
 		);
@@ -56,6 +57,7 @@ public class KeycloakUserAdminService {
 
 		return retrieveUsers(
 				() -> usersResource.search(request.getSearch(), getPage(pageable), getPageSize(pageable)),
+				() -> usersResource.count(request.getSearch()),
 				clientId,
 				pageable
 		);
@@ -119,14 +121,15 @@ public class KeycloakUserAdminService {
 				: Integer.MAX_VALUE;
 	}
 
-	private Page<User> retrieveUsers(Supplier<List<UserRepresentation>> userRepresentations, String clientId, Pageable pageable) {
+	private Page<User> retrieveUsers(Supplier<List<UserRepresentation>> userRepresentations, Supplier<Integer> userCount, String clientId, Pageable pageable) {
 		List<User> users = userRepresentations.get()
 				.stream()
 				.map(userRepresentation -> enhanceWithClientRoles(userRepresentation, clientId))
 				.map(userRepresentation -> new User(userRepresentation, clientId))
 				.collect(toList());
+		Integer total = userCount.get();
 
-		return new PageImpl<>(users, pageable, usersResource.count());
+		return new PageImpl<>(users, pageable, total);
 	}
 
 	private UserRepresentation enhanceWithClientRoles(UserRepresentation userRepresentation, String clientId) {
