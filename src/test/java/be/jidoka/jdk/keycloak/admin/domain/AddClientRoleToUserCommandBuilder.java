@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class AddClientRoleToUserBuilder implements AddClientRoleToUser {
+public class AddClientRoleToUserCommandBuilder implements AddClientRoleToUserCommand {
 
 	String clientId;
 	String roleName;

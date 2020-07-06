@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.*;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KeycloakUserAdminServiceSearchUsersUnpagedTest extends IntegrationTest {

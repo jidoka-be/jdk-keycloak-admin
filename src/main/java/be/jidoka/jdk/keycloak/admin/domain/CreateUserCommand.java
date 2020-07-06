@@ -2,7 +2,7 @@ package be.jidoka.jdk.keycloak.admin.domain;
 
 import java.util.Set;
 
-public interface CreateUser extends HasUserPersonalData {
+public interface CreateUserCommand extends UserPersonalDataCommand {
 
 	String getUsername();
 

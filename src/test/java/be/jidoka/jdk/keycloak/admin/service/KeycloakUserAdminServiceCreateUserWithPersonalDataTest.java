@@ -1,7 +1,7 @@
 package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
-import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import org.junit.jupiter.api.Test;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static be.jidoka.jdk.keycloak.admin.service.UserResourceAssertions.assertRequiredActions;
+import static be.jidoka.jdk.keycloak.admin.service.UserResourceAssertions.assertUserAttribute;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,7 +35,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 	public void createsTheUser() {
 		String organisationIdPersonalDataKey = "organisationId";
 		Map<String, List<String>> personalData = Collections.singletonMap(organisationIdPersonalDataKey, singletonList("10002"));
-		CreateUserBuilder createUserRequest = CreateUserBuilder.builder()
+		CreateUserCommandBuilder createUserRequest = CreateUserCommandBuilder.builder()
 				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
@@ -53,15 +55,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 		assertThat(user.getEmail()).isNotNull().isEqualTo(EMAIL);
 		assertThat(user.isEnabled()).isFalse();
 		assertThat(user.getClientRoles()).isNull();
-		assertThat(user.getAttributes())
-				.hasSize(1)
-				.containsExactly(
-						Map.entry("organisationId", singletonList("10002"))
-				);
-		assertThat(user.getRequiredActions())
-				.hasSize(4)
-				.containsOnly(
-						"CONFIGURE_TOTP", "UPDATE_PASSWORD", "UPDATE_PROFILE", "VERIFY_EMAIL"
-				);
+		assertUserAttribute(user, "organisationId", "10002");
+		assertRequiredActions(user, Set.of(UserAction.values()));
 	}
 }

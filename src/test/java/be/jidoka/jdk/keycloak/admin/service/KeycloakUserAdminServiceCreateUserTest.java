@@ -1,7 +1,7 @@
 package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
-import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequestBuilder;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,7 @@ class KeycloakUserAdminServiceCreateUserTest extends IntegrationTest {
 	@Test
 	public void createsTheUser() {
 		GetUsersRequest getUsersRequest = GetUsersRequestBuilder.builder().pageable(Pageable.unpaged()).build();
-		CreateUserBuilder createUserRequest = CreateUserBuilder.builder()
+		CreateUserCommandBuilder createUserRequest = CreateUserCommandBuilder.builder()
 				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)

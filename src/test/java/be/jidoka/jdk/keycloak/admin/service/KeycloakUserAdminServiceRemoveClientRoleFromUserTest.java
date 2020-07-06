@@ -1,13 +1,13 @@
 package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
-import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.Client;
 import be.jidoka.jdk.keycloak.admin.domain.CreateClientRoleBuilder;
-import be.jidoka.jdk.keycloak.admin.domain.CreateUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
-import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUserBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,14 +45,14 @@ class KeycloakUserAdminServiceRemoveClientRoleFromUserTest extends IntegrationTe
 				.clientContainerId(clientId)
 				.roleName(ROLE_NAME)
 				.build());
-		userId = keycloakUserAdminService.createUser(CreateUserBuilder.builder()
+		userId = keycloakUserAdminService.createUser(CreateUserCommandBuilder.builder()
 				.firstName(FIRST_NAME)
 				.lastName(LAST_NAME)
 				.email(EMAIL)
 				.username(USERNAME)
 				.pictureUrl(PICTURE_URL)
 				.build());
-		AddClientRoleToUserBuilder addClientRoleToUserRequest = AddClientRoleToUserBuilder.builder()
+		AddClientRoleToUserCommandBuilder addClientRoleToUserRequest = AddClientRoleToUserCommandBuilder.builder()
 				.userId(userId)
 				.clientId(clientId)
 				.roleName(ROLE_NAME)
@@ -66,7 +66,7 @@ class KeycloakUserAdminServiceRemoveClientRoleFromUserTest extends IntegrationTe
 
 		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).containsExactly(ROLE_NAME);
 
-		RemoveClientRoleFromUserBuilder removeClientRoleFromUserRequest = RemoveClientRoleFromUserBuilder.builder()
+		RemoveClientRoleFromUserCommandBuilder removeClientRoleFromUserRequest = RemoveClientRoleFromUserCommandBuilder.builder()
 				.clientId(clientId)
 				.roleName(ROLE_NAME)
 				.userId(userId)
