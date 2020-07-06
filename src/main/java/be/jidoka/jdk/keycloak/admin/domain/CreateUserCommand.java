@@ -1,11 +1,8 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
-public interface CreateUser {
+public interface CreateUserCommand extends UserPersonalDataCommand {
 
 	String getUsername();
 
@@ -16,10 +13,6 @@ public interface CreateUser {
 	String getEmail();
 
 	boolean isEnabled();
-
-	Optional<String> getPictureUrl();
-
-	Map<String, List<String>> getPersonalData();
 
 	Set<UserAction> getRequiredUserActions();
 }

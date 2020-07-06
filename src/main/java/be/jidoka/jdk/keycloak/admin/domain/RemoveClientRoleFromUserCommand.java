@@ -1,8 +1,10 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
-public interface AddClientRoleToUser {
+public interface RemoveClientRoleFromUserCommand {
+
+	String getUserId();
 
 	String getClientId();
+
 	String getRoleName();
-	String getUserId();
 }

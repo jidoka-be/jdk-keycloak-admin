@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.bertenBoedhoe;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.bertenBoedhoe;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class KeycloakUserAdminServiceSendUserActionEmailsTest extends IntegrationTest {

@@ -1,14 +1,18 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
+import java.util.Set;
+
+import static be.jidoka.jdk.keycloak.admin.domain.UserAction.UPDATE_PASSWORD;
+import static be.jidoka.jdk.keycloak.admin.domain.UserAction.VERIFY_EMAIL;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 
-public final class CreateUserFixture {
+public final class CreateUserCommandFixture {
 
-	private CreateUserFixture() { }
+	private CreateUserCommandFixture() { }
 
-	public static CreateUser aafkeBorrenbergs() {
-		return CreateUserBuilder.builder()
+	public static CreateUserCommand aafkeBorrenbergs() {
+		return CreateUserCommandBuilder.builder()
 				.firstName("Aafke")
 				.lastName("Borrenbergs")
 				.username("aafke.borrenbergs")
@@ -16,18 +20,20 @@ public final class CreateUserFixture {
 				.build();
 	}
 
-	public static CreateUser bertenBoedhoe() {
-		return CreateUserBuilder.builder()
-				.firstName("Bertan")
+	public static CreateUserCommand bertenBoedhoe() {
+		return CreateUserCommandBuilder.builder()
+				.firstName("Berten")
 				.lastName("Boedhoe")
 				.username("bertan.boedhoe")
 				.email("bertan.boedhoe@gmail.com")
 				.pictureUrl("http://localhost/api/persons/bertan_boedhoe.thumbnail.png")
+				.personalData(singletonMap("organisationId", singletonList("2")))
+				.requiredUserActions(Set.of(UPDATE_PASSWORD, VERIFY_EMAIL))
 				.build();
 	}
 
-	public static CreateUser davitaOttervanger() {
-		return CreateUserBuilder.builder()
+	public static CreateUserCommand davitaOttervanger() {
+		return CreateUserCommandBuilder.builder()
 				.firstName("Davita")
 				.lastName("Ottervanger")
 				.username("davita.ottervange")
@@ -36,8 +42,8 @@ public final class CreateUserFixture {
 				.build();
 	}
 
-	public static CreateUser eliseStelten() {
-		return CreateUserBuilder.builder()
+	public static CreateUserCommand eliseStelten() {
+		return CreateUserCommandBuilder.builder()
 				.firstName("Elise")
 				.lastName("Stelten")
 				.username("elise.stelten")
@@ -45,8 +51,8 @@ public final class CreateUserFixture {
 				.build();
 	}
 
-	public static CreateUser eshelleHerrewijn() {
-		return CreateUserBuilder.builder()
+	public static CreateUserCommand eshelleHerrewijn() {
+		return CreateUserCommandBuilder.builder()
 				.firstName("Eshelle")
 				.lastName("Herrewijn")
 				.username("eshelle.herrewijn")

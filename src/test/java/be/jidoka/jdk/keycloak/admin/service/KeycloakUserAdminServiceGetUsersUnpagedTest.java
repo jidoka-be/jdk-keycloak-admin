@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.aafkeBorrenbergs;
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.davitaOttervanger;
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.eshelleHerrewijn;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.aafkeBorrenbergs;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.davitaOttervanger;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.eshelleHerrewijn;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KeycloakUserAdminServiceGetUsersUnpagedTest extends IntegrationTest {

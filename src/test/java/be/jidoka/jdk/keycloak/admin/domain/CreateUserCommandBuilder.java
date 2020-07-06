@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Getter
 @Builder
-public class CreateUserBuilder implements CreateUser {
+public class CreateUserCommandBuilder implements CreateUserCommand {
 
 	private String username;
 	private String firstName;

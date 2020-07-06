@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class RemoveClientRoleFromUserBuilder implements RemoveClientRoleFromUser {
+public class RemoveClientRoleFromUserCommandBuilder implements RemoveClientRoleFromUserCommand {
 
 	private String clientId;
 	private String roleName;

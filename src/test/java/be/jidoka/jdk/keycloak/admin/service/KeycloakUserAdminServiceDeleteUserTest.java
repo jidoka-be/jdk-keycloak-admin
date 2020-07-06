@@ -10,11 +10,11 @@ import javax.ws.rs.NotFoundException;
 
 import java.util.UUID;
 
-import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.aafkeBorrenbergs;
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.aafkeBorrenbergs;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class KeycloakUserAdminDeleteUserTest extends IntegrationTest {
+class KeycloakUserAdminServiceDeleteUserTest extends IntegrationTest {
 
 	@Autowired
 	private KeycloakUserAdminService keycloakUserAdminService;
