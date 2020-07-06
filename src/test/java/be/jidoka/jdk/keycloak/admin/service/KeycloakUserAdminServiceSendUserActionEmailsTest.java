@@ -4,6 +4,7 @@ import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.UserAction;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,12 @@ class KeycloakUserAdminServiceSendUserActionEmailsTest extends IntegrationTest {
 	@BeforeEach
 	public void setUp() {
 		userId = keycloakUserAdminService.createUser(bertenBoedhoe());
+		mailhog.start();
+	}
+
+	@AfterEach
+	void tearDown() {
+		mailhog.stop();
 	}
 
 	@Test

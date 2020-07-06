@@ -23,7 +23,7 @@ public abstract class IntegrationTest {
 
 	private static Network network = Network.newNetwork();
 
-	private static GenericContainer mailhog = new GenericContainer<>("mailhog/mailhog:v1.0.0")
+	protected static GenericContainer mailhog = new GenericContainer<>("mailhog/mailhog:v1.0.0")
 			.withExposedPorts(1025)
 			.withNetworkAliases("mailhog")
 			.withNetwork(network)
@@ -37,15 +37,13 @@ public abstract class IntegrationTest {
 			.withEnv("KEYCLOAK_IMPORT", "/tmp/realm-export.json")
 			.withClasspathResourceMapping("realm-export.json", "/tmp/realm-export.json", BindMode.READ_ONLY)
 			.withNetwork(network)
-			.waitingFor(Wait.forHttp("/auth"))
-			.dependsOn(mailhog);
+			.waitingFor(Wait.forHttp("/auth"));
 
 	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
 		@Override
 		public void initialize(ConfigurableApplicationContext applicationContext) {
 			keycloak.start();
-			mailhog.start();
 			TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
 					applicationContext,
 					"keycloak-admin.auth-server-url=http://" + keycloak.getContainerIpAddress() + ":" + keycloak.getFirstMappedPort() + "/auth",
@@ -59,6 +57,5 @@ public abstract class IntegrationTest {
 	@AfterAll
 	static void afterAll() {
 		keycloak.stop();
-		mailhog.stop();
 	}
 }
