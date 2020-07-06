@@ -90,6 +90,11 @@ public class KeycloakUserAdminService {
 		return getCreatedId(response);
 	}
 
+	/**
+	 * Sends emails for the specified user actions to the User.
+	 *
+	 * @throws javax.ws.rs.InternalServerErrorException when SMTP is not configured or accessible.
+	 */
 	public void sendUserActionEmails(SendUserActionEmailRequest request) {
 		UserResource userResource = usersResource.get(request.getUserId());
 

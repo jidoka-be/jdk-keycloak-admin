@@ -3,17 +3,15 @@ package be.jidoka.jdk.keycloak.admin.service;
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequestBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.InternalServerErrorException;
 import java.util.Set;
 
 import static be.jidoka.jdk.keycloak.admin.domain.CreateUserFixture.bertenBoedhoe;
-import static be.jidoka.jdk.keycloak.admin.domain.UserAction.UPDATE_PASSWORD;
-import static be.jidoka.jdk.keycloak.admin.domain.UserAction.VERIFY_EMAIL;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class KeycloakUserAdminServiceSendUserActionEmailsTest extends IntegrationTest {
 
@@ -28,13 +26,13 @@ class KeycloakUserAdminServiceSendUserActionEmailsTest extends IntegrationTest {
 	}
 
 	@Test
-	void throwsExceptionWhenSMTPIsNotConfigured() {
+	void doesNotThrowExceptionWhenSMTPIsConfigured() {
 		SendUserActionEmailRequest sendUserActionEmailRequest = SendUserActionEmailRequestBuilder.builder()
 				.userId(userId)
-				.userActions(Set.of(UPDATE_PASSWORD, VERIFY_EMAIL))
+				.userActions(Set.of(UserAction.values()))
 				.build();
 
-		assertThatThrownBy(() -> keycloakUserAdminService.sendUserActionEmails(sendUserActionEmailRequest))
-				.isInstanceOf(InternalServerErrorException.class);
+		assertThatCode(() -> keycloakUserAdminService.sendUserActionEmails(sendUserActionEmailRequest))
+				.doesNotThrowAnyException();
 	}
 }
