@@ -1345,7 +1345,17 @@
     "xXSSProtection": "1; mode=block",
     "strictTransportSecurity": "max-age=31536000; includeSubDomains"
   },
-  "smtpServer": {},
+  "smtpServer" : {
+    "replyToDisplayName" : "",
+    "starttls" : "",
+    "port" : "1025",
+    "auth" : "",
+    "host" : "mailhog",
+    "replyTo" : "",
+    "from" : "keycloak@testcontainers.com",
+    "ssl" : "",
+    "envelopeFrom" : ""
+  },
   "eventsEnabled": false,
   "eventsListeners": [
     "jboss-logging"

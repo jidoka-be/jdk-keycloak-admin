@@ -6,7 +6,9 @@ import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUser;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserRequest;
+import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
 import be.jidoka.jdk.keycloak.admin.domain.User;
+import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.resource.ClientsResource;
 import org.keycloak.admin.client.resource.UserResource;
@@ -21,10 +23,12 @@ import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static be.jidoka.jdk.keycloak.admin.domain.User.PICTURE_URL_ATTRIBUTE;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.keycloak.admin.client.CreatedResponseUtil.getCreatedId;
@@ -73,16 +77,28 @@ public class KeycloakUserAdminService {
 
 	public String createUser(CreateUser createUser) {
 		UserRepresentation user = new UserRepresentation();
-		user.setEnabled(true);
+		user.setEnabled(createUser.isEnabled());
 		user.setUsername(createUser.getUsername());
 		user.setFirstName(createUser.getFirstName());
 		user.setLastName(createUser.getLastName());
 		user.setEmail(createUser.getEmail());
 		user.setAttributes(getPersonalData(createUser));
+		user.setRequiredActions(getActions(createUser.getRequiredUserActions()));
 
 		Response response = usersResource.create(user);
 
 		return getCreatedId(response);
+	}
+
+	/**
+	 * Sends emails for the specified user actions to the User.
+	 *
+	 * @throws javax.ws.rs.InternalServerErrorException when SMTP is not configured or accessible.
+	 */
+	public void sendUserActionEmails(SendUserActionEmailRequest request) {
+		UserResource userResource = usersResource.get(request.getUserId());
+
+		userResource.executeActionsEmail(getActions(request.getUserActions()));
 	}
 
 	public void addClientRoleToUser(AddClientRoleToUser addClientRoleToUser) {
@@ -157,11 +173,26 @@ public class KeycloakUserAdminService {
 	}
 
 	private Map<String, List<String>> getPersonalData(CreateUser createUser) {
-		Map<String, List<String>> personalData = new HashMap<>(createUser.getPersonalData());
+		Map<String, List<String>> personalData = new HashMap<>();
+
+		if (createUser.getPersonalData() != null) {
+			personalData.putAll(createUser.getPersonalData());
+		}
 
 		createUser.getPictureUrl()
 				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(pictureUrl)));
 
 		return personalData;
+	}
+
+	private List<String> getActions(Set<UserAction> userActions) {
+		if (userActions == null) {
+			return emptyList();
+		}
+
+		return userActions
+				.stream()
+				.map(UserAction::name)
+				.collect(toList());
 	}
 }
