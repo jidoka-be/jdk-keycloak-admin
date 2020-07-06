@@ -28,6 +28,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import static be.jidoka.jdk.keycloak.admin.domain.User.PICTURE_URL_ATTRIBUTE;
+import static java.util.Collections.emptyList;
 import static java.util.Collections.singletonList;
 import static java.util.stream.Collectors.toList;
 import static org.keycloak.admin.client.CreatedResponseUtil.getCreatedId;
@@ -167,7 +168,11 @@ public class KeycloakUserAdminService {
 	}
 
 	private Map<String, List<String>> getPersonalData(CreateUser createUser) {
-		Map<String, List<String>> personalData = new HashMap<>(createUser.getPersonalData());
+		Map<String, List<String>> personalData = new HashMap<>();
+
+		if (createUser.getPersonalData() != null) {
+			personalData.putAll(createUser.getPersonalData());
+		}
 
 		createUser.getPictureUrl()
 				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(pictureUrl)));
@@ -176,6 +181,10 @@ public class KeycloakUserAdminService {
 	}
 
 	private List<String> getActions(Set<UserAction> userActions) {
+		if (userActions == null) {
+			return emptyList();
+		}
+
 		return userActions
 				.stream()
 				.map(UserAction::name)
