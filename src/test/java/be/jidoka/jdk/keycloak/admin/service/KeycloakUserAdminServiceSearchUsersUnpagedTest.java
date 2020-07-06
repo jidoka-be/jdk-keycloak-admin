@@ -36,6 +36,7 @@ class KeycloakUserAdminServiceSearchUsersUnpagedTest extends IntegrationTest {
 
 		Page<User> users = keycloakUserAdminService.searchUsers(searchUsersRequest);
 
+		assertThat(users.getTotalElements()).isEqualTo(2);
 		assertThat(users)
 				.hasSize(2)
 				.extracting("username", "firstName", "lastName", "email")
