@@ -107,6 +107,12 @@ public class KeycloakUserAdminService {
 				.remove(singletonList(clientRole));
 	}
 
+	public void deleteUser(String userId) {
+		UserResource user = usersResource.get(userId);
+
+		user.remove();
+	}
+
 	private int getPage(Pageable pageable) {
 		return pageable.isPaged()
 				? (int) pageable.getOffset()

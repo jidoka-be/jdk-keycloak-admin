@@ -1,6 +1,7 @@
 package be.jidoka.jdk.keycloak.admin;
 
 import be.jidoka.jdk.keycloak.admin.config.KeycloakAdminAutoConfiguration;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContextInitializer;
@@ -44,8 +45,8 @@ public abstract class IntegrationTest {
 		}
 	}
 
-	@AfterEach
-	public void tearDown() {
+	@AfterAll
+	static void afterAll() {
 		keycloak.stop();
 	}
 }
