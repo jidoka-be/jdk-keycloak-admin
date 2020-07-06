@@ -1,5 +1,9 @@
 package be.jidoka.jdk.keycloak.admin.domain;
 
+import java.util.Set;
+
+import static be.jidoka.jdk.keycloak.admin.domain.UserAction.UPDATE_PASSWORD;
+import static be.jidoka.jdk.keycloak.admin.domain.UserAction.VERIFY_EMAIL;
 import static java.util.Collections.singletonList;
 import static java.util.Collections.singletonMap;
 
@@ -18,11 +22,12 @@ public final class CreateUserFixture {
 
 	public static CreateUser bertenBoedhoe() {
 		return CreateUserBuilder.builder()
-				.firstName("Bertan")
+				.firstName("Berten")
 				.lastName("Boedhoe")
 				.username("bertan.boedhoe")
 				.email("bertan.boedhoe@gmail.com")
 				.pictureUrl("http://localhost/api/persons/bertan_boedhoe.thumbnail.png")
+				.requiredUserActions(Set.of(UPDATE_PASSWORD, VERIFY_EMAIL))
 				.build();
 	}
 

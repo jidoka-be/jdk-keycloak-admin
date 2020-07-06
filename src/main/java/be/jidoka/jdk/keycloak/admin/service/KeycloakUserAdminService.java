@@ -4,9 +4,11 @@ import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUser;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUser;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
+import be.jidoka.jdk.keycloak.admin.domain.HasUserPersonalData;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUser;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
+import be.jidoka.jdk.keycloak.admin.domain.UpdateUser;
 import be.jidoka.jdk.keycloak.admin.domain.User;
 import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import org.apache.commons.lang3.StringUtils;
@@ -19,7 +21,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
-import javax.ws.rs.core.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,18 +77,41 @@ public class KeycloakUserAdminService {
 	}
 
 	public String createUser(CreateUser createUser) {
-		UserRepresentation user = new UserRepresentation();
-		user.setEnabled(createUser.isEnabled());
-		user.setUsername(createUser.getUsername());
-		user.setFirstName(createUser.getFirstName());
-		user.setLastName(createUser.getLastName());
-		user.setEmail(createUser.getEmail());
-		user.setAttributes(getPersonalData(createUser));
-		user.setRequiredActions(getActions(createUser.getRequiredUserActions()));
+		UserRepresentation userRepresentation = new UserRepresentation();
+		userRepresentation.setEnabled(createUser.isEnabled());
+		userRepresentation.setUsername(createUser.getUsername());
+		userRepresentation.setFirstName(createUser.getFirstName());
+		userRepresentation.setLastName(createUser.getLastName());
+		userRepresentation.setEmail(createUser.getEmail());
+		userRepresentation.setAttributes(getPersonalData(createUser));
+		userRepresentation.setRequiredActions(getActions(createUser.getRequiredUserActions()));
 
-		Response response = usersResource.create(user);
+		return getCreatedId(usersResource.create(userRepresentation));
+	}
 
-		return getCreatedId(response);
+	/**
+	 * Does a PATCH of an existing User.
+	 * Only following attributes will be overridden:
+	 * - pictureUrl
+	 * - personalData
+	 * - requiredUserActions
+	 *
+	 * Username can only be updated when enabled in the realm (editUsernameAllowed).
+	 * Otherwise this will be silently discarded, no update on this field.
+	 */
+	public void updateUser(UpdateUser updateUser) {
+		UserRepresentation userRepresentation = new UserRepresentation();
+		updateUser.getEnabled().ifPresent(userRepresentation::setEnabled);
+		updateUser.getUsername().ifPresent(userRepresentation::setUsername);
+		updateUser.getFirstName().ifPresent(userRepresentation::setFirstName);
+		updateUser.getLastName().ifPresent(userRepresentation::setLastName);
+		updateUser.getEmail().ifPresent(userRepresentation::setEmail);
+		userRepresentation.setAttributes(getPersonalData(updateUser));
+		userRepresentation.setRequiredActions(getActions(updateUser.getRequiredUserActions()));
+
+		UserResource userResource = usersResource.get(updateUser.getUserId());
+
+		userResource.update(userRepresentation);
 	}
 
 	/**
@@ -172,14 +196,14 @@ public class KeycloakUserAdminService {
 		return userWithRoles;
 	}
 
-	private Map<String, List<String>> getPersonalData(CreateUser createUser) {
+	private Map<String, List<String>> getPersonalData(HasUserPersonalData hasUserPersonalData) {
 		Map<String, List<String>> personalData = new HashMap<>();
 
-		if (createUser.getPersonalData() != null) {
-			personalData.putAll(createUser.getPersonalData());
+		if (hasUserPersonalData.getPersonalData() != null) {
+			personalData.putAll(hasUserPersonalData.getPersonalData());
 		}
 
-		createUser.getPictureUrl()
+		hasUserPersonalData.getPictureUrl()
 				.ifPresent(pictureUrl -> personalData.put(PICTURE_URL_ATTRIBUTE, singletonList(pictureUrl)));
 
 		return personalData;
