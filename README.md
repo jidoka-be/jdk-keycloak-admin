@@ -1,5 +1,5 @@
 ![](https://github.com/jidoka-be/jdk-keycloak-admin/workflows/build/badge.svg)
-
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=jidoka-be_jdk-keycloak-admin&metric=alert_status)](https://sonarcloud.io/dashboard?id=jidoka-be_jdk-keycloak-admin)
 # jdk-keycloak-admin
 
 Spring auto-configured library to add keycloak admin support.
