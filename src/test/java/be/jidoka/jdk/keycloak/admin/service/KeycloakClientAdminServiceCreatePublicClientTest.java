@@ -13,7 +13,7 @@ class KeycloakClientAdminServiceCreatePublicClientTest extends IntegrationTest {
 	private KeycloakClientAdminService keycloakClientAdminService;
 
 	@Test
-	public void createsPublicClientCorrectly() {
+	void createsPublicClientCorrectly() {
 		keycloakClientAdminService.createPublicClient(aPublicClientRequest);
 		assertThat(keycloakClientAdminService.getClients()).extracting("clientId").contains("cv-app");
 	}

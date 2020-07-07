@@ -17,7 +17,7 @@ class KeycloakClientAdminServiceCreateClientRoleTest extends IntegrationTest {
 	private KeycloakClientAdminService keycloakClientAdminService;
 
 	@Test
-	public void addsRolesToExistingClient() {
+	void addsRolesToExistingClient() {
 		keycloakClientAdminService.createPublicClient(aPublicClientRequest);
 		Optional<Client> client = keycloakClientAdminService.getClient(aPublicClientRequest.getClientId());
 		keycloakClientAdminService.createClientRole(CreateClientRoleBuilder.builder()
