@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -95,7 +96,7 @@ public class KeycloakUserAdminService {
 	 * - pictureUrl
 	 * - personalData
 	 * - requiredUserActions
-	 *
+	 * <p>
 	 * Username can only be updated when enabled in the realm (editUsernameAllowed).
 	 * Otherwise this will be silently discarded, no update on this field.
 	 */
@@ -167,13 +168,13 @@ public class KeycloakUserAdminService {
 				: Integer.MAX_VALUE;
 	}
 
-	private Page<User> retrieveUsers(Supplier<List<UserRepresentation>> userRepresentations, Supplier<Integer> userCount, String clientId, Pageable pageable) {
+	private Page<User> retrieveUsers(Supplier<List<UserRepresentation>> userRepresentations, IntSupplier userCount, String clientId, Pageable pageable) {
 		List<User> users = userRepresentations.get()
 				.stream()
 				.map(userRepresentation -> enhanceWithClientRoles(userRepresentation, clientId))
 				.map(userRepresentation -> new User(userRepresentation, clientId))
 				.collect(toList());
-		Integer total = userCount.get();
+		int total = userCount.getAsInt();
 
 		return new PageImpl<>(users, pageable, total);
 	}
