@@ -22,7 +22,7 @@ jobs:
           java-version: 11
       - name: Get branch name
         shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})"
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF##*/})" && echo ${GITHUB_REF##*/}
         id: get_branch
       - name: Cache local Maven repository
         uses: actions/cache@v2
@@ -41,8 +41,8 @@ jobs:
         uses: whelk-io/maven-settings-xml-action@v4
         with:
           servers: '[{ "id": "ossrh", "username": "${{ secrets.OSSRH_USER }}", "password": "${{ secrets.OSSRH_PASSWORD }}" }]'
-      - name: Build artifact
-        run: echo 'Building' && ./mvnw --batch-mode clean verify
+      - name: Build artifact and perform Sonar analysis
+        run: echo 'Build artifact and perform Sonar analysis' && ./mvnw --batch-mode clean verify sonar:sonar -Dsonar.login="${{ secrets.SONAR_LOGIN }}" -P coverage
       - if: steps.get_branch.outputs.branch == 'master'
         name: Publish to Central Repository
         run: echo 'Deploying' && ./mvnw --no-transfer-progress --batch-mode clean deploy -DskipTests -Dgpg.passphrase="${{ secrets.PASSPHRASE }}" -P release
