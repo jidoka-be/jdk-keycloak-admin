@@ -36,7 +36,7 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 	private String clientId;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		keycloakClientAdminService.createPublicClient(aPublicClientRequest);
 		Optional<Client> client = keycloakClientAdminService.getClient(aPublicClientRequest.getClientId());
 		clientId = client.get().getId();
@@ -54,7 +54,7 @@ class KeycloakUserAdminServiceAddClientRoleToUserTest extends IntegrationTest {
 	}
 
 	@Test
-	public void addsTheRoleToTheUser() {
+	void addsTheRoleToTheUser() {
 		GetUserRequest getUserRequest = GetUserRequestBuilder.builder().userId(userId).clientId(clientId).build();
 
 		assertThat(keycloakUserAdminService.getUser(getUserRequest).getClientRoles()).isEmpty();

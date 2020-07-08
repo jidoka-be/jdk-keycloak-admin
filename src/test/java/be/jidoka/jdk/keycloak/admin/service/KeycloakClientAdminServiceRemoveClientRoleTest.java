@@ -18,7 +18,7 @@ class KeycloakClientAdminServiceRemoveClientRoleTest extends IntegrationTest {
 	private KeycloakClientAdminService keycloakClientAdminService;
 
 	@Test
-	public void deletesRoleFromClient() {
+	void deletesRoleFromClient() {
 		keycloakClientAdminService.createPublicClient(aPublicClientRequest);
 		Optional<Client> client = keycloakClientAdminService.getClient(aPublicClientRequest.getClientId());
 		CreateClientRoleBuilder createClientRole = CreateClientRoleBuilder.builder()

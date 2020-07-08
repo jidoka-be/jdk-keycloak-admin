@@ -15,7 +15,7 @@ class KeycloakClientAdminServiceGetClientsTest extends IntegrationTest {
 	private KeycloakClientAdminService keycloakClientAdminService;
 
 	@Test
-	public void returnsAllClientsConfiguredInKeycloak() {
+	void returnsAllClientsConfiguredInKeycloak() {
 		Set<Client> clients = keycloakClientAdminService.getClients();
 		assertThat(clients).hasSize(7);
 		assertThat(clients).extracting("clientId").contains("idm-client");

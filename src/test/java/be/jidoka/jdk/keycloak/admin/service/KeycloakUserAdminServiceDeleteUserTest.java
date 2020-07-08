@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.ws.rs.NotFoundException;
-
 import java.util.UUID;
 
 import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.aafkeBorrenbergs;
@@ -40,7 +39,9 @@ class KeycloakUserAdminServiceDeleteUserTest extends IntegrationTest {
 
 	@Test
 	void throwsExceptionWhenUserToDeleteIsNotFound() {
-		assertThatThrownBy(() -> keycloakUserAdminService.deleteUser(UUID.randomUUID().toString()))
+		String randomUserId = UUID.randomUUID().toString();
+
+		assertThatThrownBy(() -> keycloakUserAdminService.deleteUser(randomUserId))
 				.isInstanceOf(NotFoundException.class);
 	}
 }

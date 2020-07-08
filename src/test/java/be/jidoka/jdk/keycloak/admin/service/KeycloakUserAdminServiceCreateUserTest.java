@@ -25,7 +25,7 @@ class KeycloakUserAdminServiceCreateUserTest extends IntegrationTest {
 	private KeycloakUserAdminService keycloakUserAdminService;
 
 	@Test
-	public void createsTheUser() {
+	void createsTheUser() {
 		GetUsersRequest getUsersRequest = GetUsersRequestBuilder.builder().pageable(Pageable.unpaged()).build();
 		CreateUserCommandBuilder createUserRequest = CreateUserCommandBuilder.builder()
 				.firstName(FIRST_NAME)

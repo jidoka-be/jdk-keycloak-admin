@@ -32,7 +32,7 @@ class KeycloakUserAdminServiceCreateUserWithPersonalDataTest extends Integration
 	private UsersResource usersResource;
 
 	@Test
-	public void createsTheUser() {
+	void createsTheUser() {
 		String organisationIdPersonalDataKey = "organisationId";
 		Map<String, List<String>> personalData = Collections.singletonMap(organisationIdPersonalDataKey, singletonList("10002"));
 		CreateUserCommandBuilder createUserRequest = CreateUserCommandBuilder.builder()
