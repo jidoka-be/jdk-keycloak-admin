@@ -1,10 +1,12 @@
 package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.domain.AddClientRoleToUserCommand;
+import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommand;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommand;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUserCommand;
+import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
 import be.jidoka.jdk.keycloak.admin.domain.UpdateUserCommand;
@@ -13,15 +15,18 @@ import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import be.jidoka.jdk.keycloak.admin.domain.UserPersonalDataCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.resource.ClientsResource;
+import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,10 +44,12 @@ public class KeycloakUserAdminService {
 
 	private final UsersResource usersResource;
 	private final ClientsResource clientsResource;
+	private final RolesResource rolesResource;
 
-	public KeycloakUserAdminService(UsersResource usersResource, ClientsResource clientsResource) {
+	public KeycloakUserAdminService(UsersResource usersResource, ClientsResource clientsResource, RolesResource rolesResource) {
 		this.usersResource = usersResource;
 		this.clientsResource = clientsResource;
+		this.rolesResource = rolesResource;
 	}
 
 	public Page<User> getUsers(GetUsersRequest request) {
@@ -67,6 +74,25 @@ public class KeycloakUserAdminService {
 				clientId,
 				pageable
 		);
+	}
+
+	public Set<User> searchUsersByRealmRole(SearchUserByRealmRoleRequest request) {
+		int page = 0;
+		int pageSize = 100;
+		int currentPageSize;
+		Set<UserRepresentation> roleUserMembers = new HashSet<>();
+
+		do {
+			Pageable pageable = PageRequest.of(page, pageSize);
+			Set<UserRepresentation> currentPage = rolesResource.get(request.getRoleName()).getRoleUserMembers(getPage(pageable), getPageSize(pageable));
+			roleUserMembers.addAll(currentPage);
+			currentPageSize = currentPage.size();
+			page++;
+		} while(currentPageSize == pageSize);
+
+		return roleUserMembers.stream()
+				.map(roleUserMember -> new User(roleUserMember, null))
+				.collect(Collectors.toSet());
 	}
 
 	public User getUser(GetUserRequest request) {
@@ -124,6 +150,12 @@ public class KeycloakUserAdminService {
 		UserResource userResource = usersResource.get(request.getUserId());
 
 		userResource.executeActionsEmail(getActions(request.getUserActions()));
+	}
+
+	public void addRealmRoleToUser(AddRealmRoleToUserCommand command) {
+		RoleRepresentation realmRole = rolesResource.get(command.getRoleName())
+				.toRepresentation();
+		usersResource.get(command.getUserId()).roles().realmLevel().add(singletonList(realmRole));
 	}
 
 	public void addClientRoleToUser(AddClientRoleToUserCommand command) {

@@ -28,6 +28,8 @@ All releases can be retrieved from Sonatype: https://search.maven.org/artifact/b
 - Get a user with client roles
 - Add client role to user
 - Remove client role from user
+- Add realm role to user
+- Search users by realm role
 
 ## Configuration
 
