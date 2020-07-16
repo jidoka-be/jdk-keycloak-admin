@@ -6,7 +6,7 @@ import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequestBuilder;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
@@ -14,13 +14,13 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KeycloakClientAdminServiceSearchUsersByRealmRoleTest extends IntegrationTest {
+class KeycloakClientAdminServiceSearchUsersByRealmRoleTest extends IntegrationTest {
 
 	@Autowired
 	private KeycloakUserAdminService keycloakUserAdminService;
 
 	@Test
-	public void returnsUsersWithRole() {
+	void returnsUsersWithRole() {
 		Set<String> userIds = createRandomUsers(150);
 
 		SearchUserByRealmRoleRequest searchRequest = SearchUserByRealmRoleRequestBuilder.builder().roleName("example").build();
