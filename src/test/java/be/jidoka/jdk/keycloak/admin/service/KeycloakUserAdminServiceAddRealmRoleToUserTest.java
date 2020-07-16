@@ -3,8 +3,6 @@ package be.jidoka.jdk.keycloak.admin.service;
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommand;
 import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommandBuilder;
-import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
-import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.User;
@@ -12,7 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 

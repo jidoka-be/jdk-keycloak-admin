@@ -6,6 +6,7 @@ import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.ClientsResource;
+import org.keycloak.admin.client.resource.GroupsResource;
 import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UsersResource;
@@ -75,5 +76,11 @@ public class KeycloakAdminAutoConfiguration {
 	@ConditionalOnMissingBean
 	public RolesResource keycloakRolesResource(RealmResource keycloakRealmResource) {
 		return keycloakRealmResource.roles();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public GroupsResource keycloakGroupsResource(RealmResource keycloakRealmResource) {
+		return keycloakRealmResource.groups();
 	}
 }
