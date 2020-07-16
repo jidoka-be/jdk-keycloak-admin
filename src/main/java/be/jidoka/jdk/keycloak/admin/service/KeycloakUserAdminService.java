@@ -91,6 +91,7 @@ public class KeycloakUserAdminService {
 		} while(currentPageSize == pageSize);
 
 		return roleUserMembers.stream()
+				.map(this::enhanceWithRealmRoles)
 				.map(roleUserMember -> new User(roleUserMember, null))
 				.collect(Collectors.toSet());
 	}
@@ -210,6 +211,21 @@ public class KeycloakUserAdminService {
 
 		return new PageImpl<>(users, pageable, total);
 	}
+
+	private UserRepresentation enhanceWithRealmRoles(UserRepresentation userRepresentation) {
+		UserResource userResource = usersResource.get(userRepresentation.getId());
+		List<RoleRepresentation> roleRepresentations = userResource.roles().realmLevel().listEffective();
+		UserRepresentation userWithRoles = userResource.toRepresentation();
+
+		userWithRoles.setRealmRoles(
+				roleRepresentations.stream()
+						.map((RoleRepresentation::getName))
+						.collect(Collectors.toUnmodifiableList())
+		);
+
+		return userWithRoles;
+	}
+
 
 	private UserRepresentation enhanceWithClientRoles(UserRepresentation userRepresentation, String clientId) {
 		if (StringUtils.isBlank(clientId)) {

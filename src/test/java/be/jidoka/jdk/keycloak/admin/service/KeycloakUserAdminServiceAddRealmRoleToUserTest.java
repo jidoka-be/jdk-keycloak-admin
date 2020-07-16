@@ -4,14 +4,19 @@ import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommand;
 import be.jidoka.jdk.keycloak.admin.domain.AddRealmRoleToUserCommandBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequestBuilder;
+import be.jidoka.jdk.keycloak.admin.domain.User;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.aafkeBorrenbergs;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KeycloakUserAdminServiceAddRealmRoleToUserTest extends IntegrationTest {
@@ -19,35 +24,23 @@ class KeycloakUserAdminServiceAddRealmRoleToUserTest extends IntegrationTest {
 	@Autowired
 	private KeycloakUserAdminService keycloakUserAdminService;
 
-	@Test
-	void addsRealmRoleToUser() {
-		Set<String> userIds = createRandomUsers(150);
+	private String userId;
 
-		SearchUserByRealmRoleRequest searchRequest = SearchUserByRealmRoleRequestBuilder.builder().roleName("example").build();
-
-		assertThat(keycloakUserAdminService.searchUsersByRealmRole(searchRequest)).extracting("id").containsExactlyInAnyOrderElementsOf(userIds);
+	@BeforeEach
+	public void setUp() {
+		userId = keycloakUserAdminService.createUser(aafkeBorrenbergs());
 	}
 
-	private Set<String> createRandomUsers(int amount) {
-		Set<String> userIds = new HashSet<>();
+	@Test
+	void addsRealmRoleToUser() {
+		AddRealmRoleToUserCommand request = AddRealmRoleToUserCommandBuilder.builder().roleName("example").userId(userId).build();
 
-		for(int i = 0; i < amount; i++) {
-			CreateUserCommandBuilder createUserRequest = CreateUserCommandBuilder.builder()
-					.firstName("Jan" + i)
-					.lastName("Pladijs" + i)
-					.email("jan.pladijs" + i + "@jidoka.be")
-					.username("jan.pladijs" + i)
-					.pictureUrl("http://localhost:4200/janpladijs" + i + ".png")
-					.build();
+		keycloakUserAdminService.addRealmRoleToUser(request);
 
-			String userId = keycloakUserAdminService.createUser(createUserRequest);
-			userIds.add(userId);
+		SearchUserByRealmRoleRequest searchUserByRealmRoleRequest = SearchUserByRealmRoleRequestBuilder.builder().roleName("example").build();
 
-			AddRealmRoleToUserCommand request = AddRealmRoleToUserCommandBuilder.builder().roleName("example").userId(userId).build();
-
-			keycloakUserAdminService.addRealmRoleToUser(request);
-		}
-
-		return userIds;
+		Set<User> actual = keycloakUserAdminService.searchUsersByRealmRole(searchUserByRealmRoleRequest);
+		assertThat(actual).hasSize(1);
+		assertThat(List.copyOf(actual).get(0).getRealmRoles()).contains("example");
 	}
 }
