@@ -1,6 +1,7 @@
 package be.jidoka.jdk.keycloak.admin.config;
 
 import be.jidoka.jdk.keycloak.admin.service.KeycloakClientAdminService;
+import be.jidoka.jdk.keycloak.admin.service.KeycloakGroupAdminService;
 import be.jidoka.jdk.keycloak.admin.service.KeycloakUserAdminService;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
@@ -40,6 +41,12 @@ public class KeycloakAdminAutoConfiguration {
 	@ConditionalOnMissingBean
 	public KeycloakUserAdminService keycloakUserAdminService(UsersResource keycloakUsersResource, ClientsResource keycloakClientsResource, RolesResource rolesResource) {
 		return new KeycloakUserAdminService(keycloakUsersResource, keycloakClientsResource, rolesResource);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public KeycloakGroupAdminService keycloakUserAdminService(GroupsResource keycloakGroupsResource) {
+		return new KeycloakGroupAdminService(keycloakGroupsResource);
 	}
 
 	@Bean
