@@ -52,7 +52,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.resteasy>3.12.1.Final</version.resteasy>
+		<version.resteasy>4.5.7.Final</version.resteasy>
 		<version.spring-boot>2.2.5.RELEASE</version.spring-boot>
 		<version.keycloak-admin-client>9.0.3</version.keycloak-admin-client>
 
