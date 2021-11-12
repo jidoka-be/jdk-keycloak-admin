@@ -1,7 +1,7 @@
 version: "3.7"
 services:
   jdk-keycloak-admin:
-    image: jboss/keycloak:9.0.3
+    image: jboss/keycloak:15.0.2
     container_name: jdk-keycloak-admin
     ports:
       - 8888:8080
