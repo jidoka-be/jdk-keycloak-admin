@@ -4,7 +4,7 @@
 
 Spring auto-configured library to add keycloak admin support.
 
-**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 9.**
+**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 15.**
 **It is important that this library is used with that version of Keycloak.**
 **Future releases of this library can support other versions of Keycloak if dependency versions of Keycloak and the integration test is adapted.**
 
@@ -28,6 +28,8 @@ All releases can be retrieved from Sonatype: https://search.maven.org/artifact/b
 - Get a user with client roles
 - Add client role to user
 - Remove client role from user
+- Add realm role to user
+- Search users by realm role
 
 ## Configuration
 

@@ -1,12 +1,15 @@
 package be.jidoka.jdk.keycloak.admin.config;
 
 import be.jidoka.jdk.keycloak.admin.service.KeycloakClientAdminService;
+import be.jidoka.jdk.keycloak.admin.service.KeycloakGroupAdminService;
 import be.jidoka.jdk.keycloak.admin.service.KeycloakUserAdminService;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.ClientsResource;
+import org.keycloak.admin.client.resource.GroupsResource;
 import org.keycloak.admin.client.resource.RealmResource;
+import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -36,8 +39,14 @@ public class KeycloakAdminAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public KeycloakUserAdminService keycloakUserAdminService(UsersResource keycloakUsersResource, ClientsResource keycloakClientsResource) {
-		return new KeycloakUserAdminService(keycloakUsersResource, keycloakClientsResource);
+	public KeycloakUserAdminService keycloakUserAdminService(UsersResource keycloakUsersResource, ClientsResource keycloakClientsResource, RolesResource rolesResource) {
+		return new KeycloakUserAdminService(keycloakUsersResource, keycloakClientsResource, rolesResource);
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public KeycloakGroupAdminService keycloakUserAdminService(GroupsResource keycloakGroupsResource) {
+		return new KeycloakGroupAdminService(keycloakGroupsResource);
 	}
 
 	@Bean
@@ -68,5 +77,17 @@ public class KeycloakAdminAutoConfiguration {
 	@ConditionalOnMissingBean
 	public ClientsResource keycloakClientsResource(RealmResource keycloakRealmResource) {
 		return keycloakRealmResource.clients();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public RolesResource keycloakRolesResource(RealmResource keycloakRealmResource) {
+		return keycloakRealmResource.roles();
+	}
+
+	@Bean
+	@ConditionalOnMissingBean
+	public GroupsResource keycloakGroupsResource(RealmResource keycloakRealmResource) {
+		return keycloakRealmResource.groups();
 	}
 }

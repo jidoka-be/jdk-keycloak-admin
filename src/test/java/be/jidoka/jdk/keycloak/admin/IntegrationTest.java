@@ -29,7 +29,7 @@ public abstract class IntegrationTest {
 			.withNetwork(network)
 			.waitingFor(Wait.forListeningPort());
 
-	private static GenericContainer keycloak = new GenericContainer<>("jboss/keycloak:9.0.3")
+	private static GenericContainer keycloak = new GenericContainer<>("jboss/keycloak:15.0.2")
 			.withExposedPorts(8080)
 			.withEnv("DB_VENDOR", "h2")
 			.withEnv("KEYCLOAK_USER", "admin")

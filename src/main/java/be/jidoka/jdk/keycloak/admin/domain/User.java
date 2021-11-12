@@ -25,9 +25,15 @@ public class User {
 	private final String email;
 	private final boolean enabled;
 	private final Map<String, List<String>> attributes;
-	private final Set<String> clientRoles;
+	private final List<String> realmRoles;
+	private Set<String> clientRoles;
 
 	public User(UserRepresentation userRepresentation, String clientId) {
+		this(userRepresentation);
+		this.clientRoles = getClientRoles(userRepresentation.getClientRoles(), clientId);
+	}
+
+	public User(UserRepresentation userRepresentation) {
 		this.id = userRepresentation.getId();
 		this.username = userRepresentation.getUsername();
 		this.firstName = userRepresentation.getFirstName();
@@ -35,7 +41,7 @@ public class User {
 		this.email = userRepresentation.getEmail();
 		this.enabled = userRepresentation.isEnabled();
 		this.attributes = userRepresentation.getAttributes();
-		this.clientRoles = getClientRoles(userRepresentation.getClientRoles(), clientId);
+		this.realmRoles = userRepresentation.getRealmRoles();
 	}
 
 	public String getId() {
@@ -56,6 +62,10 @@ public class User {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public List<String> getRealmRoles() {
+		return realmRoles;
 	}
 
 	public boolean isEnabled() {

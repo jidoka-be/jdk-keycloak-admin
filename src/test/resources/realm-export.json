@@ -39,6 +39,14 @@
   "roles": {
     "realm": [
       {
+        "id": "c81a4b1d-f560-499e-a244-14395c2fcee3",
+        "name": "example",
+        "composite": false,
+        "clientRole": false,
+        "containerId": "keycloak-admin-service",
+        "attributes": {}
+      },
+      {
         "id": "29cfac27-fb19-4b04-b252-9a244bcda245",
         "name": "uma_authorization",
         "description": "${role_uma_authorization}",
