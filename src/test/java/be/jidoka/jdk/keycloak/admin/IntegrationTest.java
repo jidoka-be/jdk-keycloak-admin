@@ -1,6 +1,7 @@
 package be.jidoka.jdk.keycloak.admin;
 
 import be.jidoka.jdk.keycloak.admin.config.KeycloakAdminAutoConfiguration;
+import dasniko.testcontainers.keycloak.KeycloakContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.context.ApplicationContextInitializer;
@@ -9,7 +10,6 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.TestPropertySourceUtils;
-import org.testcontainers.containers.BindMode;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.Wait;
@@ -23,21 +23,16 @@ public abstract class IntegrationTest {
 
 	private static Network network = Network.newNetwork();
 
-	protected static GenericContainer mailhog = new GenericContainer<>("mailhog/mailhog:v1.0.0")
+	protected static GenericContainer<?> mailhog = new GenericContainer<>("mailhog/mailhog:v1.0.1")
 			.withExposedPorts(1025)
 			.withNetworkAliases("mailhog")
 			.withNetwork(network)
 			.waitingFor(Wait.forListeningPort());
 
-	private static GenericContainer keycloak = new GenericContainer<>("jboss/keycloak:15.0.2")
-			.withExposedPorts(8080)
-			.withEnv("DB_VENDOR", "h2")
-			.withEnv("KEYCLOAK_USER", "admin")
-			.withEnv("KEYCLOAK_PASSWORD", "admin")
-			.withEnv("KEYCLOAK_IMPORT", "/tmp/realm-export.json")
-			.withClasspathResourceMapping("realm-export.json", "/tmp/realm-export.json", BindMode.READ_ONLY)
-			.withNetwork(network)
-			.waitingFor(Wait.forHttp("/auth"));
+	private static KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:19.0.1")
+			.withContextPath("/auth")
+			.withRealmImportFiles("/realm-export.json")
+			.withNetwork(network);
 
 	static class Initializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 

@@ -24,9 +24,9 @@ public final class CreateUserCommandFixture {
 		return CreateUserCommandBuilder.builder()
 				.firstName("Berten")
 				.lastName("Boedhoe")
-				.username("bertan.boedhoe")
-				.email("bertan.boedhoe@gmail.com")
-				.pictureUrl("http://localhost/api/persons/bertan_boedhoe.thumbnail.png")
+				.username("berten.boedhoe")
+				.email("berten.boedhoe@gmail.com")
+				.pictureUrl("http://localhost/api/persons/berten_boedhoe.thumbnail.png")
 				.personalData(singletonMap("organisationId", singletonList("2")))
 				.requiredUserActions(Set.of(UPDATE_PASSWORD, VERIFY_EMAIL))
 				.build();

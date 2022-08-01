@@ -37,7 +37,7 @@ class KeycloakUserAdminServiceUpdateUserTest extends IntegrationTest {
 		UserRepresentation user = usersResource.get(userId).toRepresentation();
 
 		assertUserExistsMatching(user, userId, createUser);
-		assertProfilePicture(user, "http://localhost/api/persons/bertan_boedhoe.thumbnail.png");
+		assertProfilePicture(user, "http://localhost/api/persons/berten_boedhoe.thumbnail.png");
 		assertUserAttribute(user, "organisationId", "2");
 		assertRequiredActions(user, Set.of(UPDATE_PASSWORD, VERIFY_EMAIL));
 
