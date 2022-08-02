@@ -30,7 +30,7 @@ class KeycloakUserAdminServiceSearchUsersUnpagedTest extends IntegrationTest {
 	@Test
 	void returnsUsersMatchingSearchTerm() {
 		SearchUsersRequestBuilder searchUsersRequest = SearchUsersRequestBuilder.builder()
-				.search("rre")
+				.search("bo")
 				.pageable(Pageable.unpaged())
 				.build();
 
@@ -42,7 +42,7 @@ class KeycloakUserAdminServiceSearchUsersUnpagedTest extends IntegrationTest {
 				.extracting("username", "firstName", "lastName", "email")
 				.containsOnly(
 						new Tuple("aafke.borrenbergs", "Aafke", "Borrenbergs", "aafke.borrenbergs@hotmail.com"),
-						new Tuple("eshelle.herrewijn", "Eshelle", "Herrewijn", "eshelle.herrewijn@gmailc.om")
+						new Tuple("berten.boedhoe", "Berten", "Boedhoe", "berten.boedhoe@gmail.com")
 				);
 	}
 }

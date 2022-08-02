@@ -4,7 +4,7 @@
 
 Spring auto-configured library to add keycloak admin support.
 
-**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 15.**
+**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 19.**
 **It is important that this library is used with that version of Keycloak.**
 **Future releases of this library can support other versions of Keycloak if dependency versions of Keycloak and the integration test is adapted.**
 
@@ -35,12 +35,12 @@ All releases can be retrieved from Sonatype: https://search.maven.org/artifact/b
 
 **Application properties to be configured:**
 
-| name                               | purpose |
-|------------------------------------|---------|
+| name                               | purpose                                                                                           |
+|------------------------------------|---------------------------------------------------------------------------------------------------|
 | keycloak-admin.auth-server-url     | Keycloak auth server url, which is the same as the configuration for the keycloak spring adapter. |
-| keycloak-admin.realm               | The keycloak realm you want to configure |
-| keycloak-admin.client-id           | Special client which has realm management rights. See configuring admin client. |
-| keycloak-admin.client-secret       | Speaks for itself |
+| keycloak-admin.realm               | The keycloak realm you want to configure.                                                         |
+| keycloak-admin.client-id           | Special client which has realm management rights. See configuring admin client.                   |
+| keycloak-admin.client-secret       | Speaks for itself.                                                                                |
 
 **Configuring an admin client in Keycloak**
 

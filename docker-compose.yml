@@ -1,13 +1,15 @@
 version: "3.7"
 services:
   jdk-keycloak-admin:
-    image: jboss/keycloak:15.0.2
+    image: quay.io/keycloak/keycloak:19.0.1
     container_name: jdk-keycloak-admin
     ports:
       - 8888:8080
     environment:
-      - KEYCLOAK_USER=admin
-      - KEYCLOAK_PASSWORD=admin123
-      - KEYCLOAK_IMPORT=/opt/jidoka/config/realm-export.json
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin123
+      - KEYCLOAK_IMPORT=/opt/keycloak/data/import/realm-export.json
+      - KC_HTTP_RELATIVE_PATH=auth
     volumes:
-      - ./src/test/resources/realm-export.json:/opt/jidoka/config/realm-export.json:ro
+      - ./src/test/resources/realm-export.json:/opt/keycloak/data/import:ro
+    command: start-dev --import-realm
