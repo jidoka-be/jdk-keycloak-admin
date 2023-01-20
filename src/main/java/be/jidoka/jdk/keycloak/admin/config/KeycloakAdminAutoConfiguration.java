@@ -45,7 +45,7 @@ public class KeycloakAdminAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public KeycloakGroupAdminService keycloakUserAdminService(GroupsResource keycloakGroupsResource) {
+	public KeycloakGroupAdminService keycloakGroupAdminService(GroupsResource keycloakGroupsResource) {
 		return new KeycloakGroupAdminService(keycloakGroupsResource);
 	}
 
