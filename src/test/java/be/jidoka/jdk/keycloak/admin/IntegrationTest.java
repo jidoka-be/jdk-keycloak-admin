@@ -29,7 +29,7 @@ public abstract class IntegrationTest {
 			.withNetwork(network)
 			.waitingFor(Wait.forListeningPort());
 
-	private static KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:19.0.1")
+	private static KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:20.0.3")
 			.withContextPath("/auth")
 			.withRealmImportFiles("/realm-export.json")
 			.withNetwork(network);
