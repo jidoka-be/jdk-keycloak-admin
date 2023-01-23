@@ -10,3 +10,8 @@ Updated keycloak-admin-client to version 15.0.2. This library can now be used wi
 
 Updated keycloak-admin-client to version 19.0.1. This library can now be used with Keycloak version 19.
 Updated Java SDK to 17.
+
+# 2.0.0
+
+Update Spring support to Spring Boot 3.x and Spring Framework 6.x.
+This library can now be used with Keycloak version 20.
