@@ -7,4 +7,11 @@
 		<packageUrl regex="true">^pkg:maven/org\.apache\.james/apache\-mime4j@.*$</packageUrl>
 		<cve>CVE-2021-40525</cve>
 	</suppress>
+	<suppress base="true">
+		<notes><![CDATA[
+   FP per issue https://github.com/jeremylong/DependencyCheck/issues/5212
+   ]]></notes>
+		<packageUrl regex="true">^pkg:maven/com\.github\.java-json-tools/json-patch@.*$</packageUrl>
+		<cpe>cpe:/a:json-patch_project:json-patch</cpe>
+	</suppress>
 </suppressions>

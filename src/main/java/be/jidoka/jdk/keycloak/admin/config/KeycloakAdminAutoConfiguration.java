@@ -12,11 +12,11 @@ import org.keycloak.admin.client.resource.RealmResource;
 import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UsersResource;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.AutoConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
-@Configuration
+@AutoConfiguration
 public class KeycloakAdminAutoConfiguration {
 
 	@Value("${keycloak-admin.auth-server-url:http://localhost:8080/auth}")
@@ -45,7 +45,7 @@ public class KeycloakAdminAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	public KeycloakGroupAdminService keycloakUserAdminService(GroupsResource keycloakGroupsResource) {
+	public KeycloakGroupAdminService keycloakGroupAdminService(GroupsResource keycloakGroupsResource) {
 		return new KeycloakGroupAdminService(keycloakGroupsResource);
 	}
 

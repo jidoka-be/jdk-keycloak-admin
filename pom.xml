@@ -56,13 +56,15 @@
 		<version.commons-lang3>3.12.0</version.commons-lang3>
 		<version.junit-jupiter>1.17.3</version.junit-jupiter>
 		<version.junit-jupiter-engine>5.9.0</version.junit-jupiter-engine>
-		<version.keycloak-admin-client>19.0.1</version.keycloak-admin-client>
+		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
 		<version.lombok>1.18.24</version.lombok>
-		<version.spring-boot>2.7.2</version.spring-boot>
-		<version.spring-security>5.7.2</version.spring-security>
-		<version.spring-test>5.3.22</version.spring-test>
+		<version.spring-boot>3.0.1</version.spring-boot>
+		<version.spring-security>6.0.1</version.spring-security>
+		<version.spring-test>6.0.4</version.spring-test>
 		<version.testcontainers-keycloak>2.3.0</version.testcontainers-keycloak>
-
+		<activation.version>1.1.1</activation.version>
+		<jakarta.activation.version>2.0.1</jakarta.activation.version>
+		
 		<sonar.projectKey>jidoka-be_jdk-keycloak-admin</sonar.projectKey>
 		<sonar.organization>jidoka-be</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -108,7 +110,7 @@
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>7.1.1</version>
+				<version>8.0.1</version>
 				<configuration>
 					<failBuildOnCVSS>8</failBuildOnCVSS>
 					<suppressionFile>owasp-dependency-check-supressions.xml</suppressionFile>
@@ -173,7 +175,7 @@
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>3.4.0</version>
+						<version>3.4.1</version>
 						<executions>
 							<execution>
 								<id>attach-javadocs</id>
@@ -248,6 +250,16 @@
 			<artifactId>spring-data-commons</artifactId>
 			<version>${version.spring-boot}</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>javax.activation</groupId>
+			<artifactId>activation</artifactId>
+			<version>${activation.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.sun.activation</groupId>
+			<artifactId>jakarta.activation</artifactId>
+			<version>${jakarta.activation.version}</version>
 		</dependency>
 
 		<dependency>
