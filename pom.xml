@@ -58,13 +58,13 @@
 		<version.junit-jupiter-engine>5.9.0</version.junit-jupiter-engine>
 		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
 		<version.lombok>1.18.24</version.lombok>
-		<version.spring-boot>3.0.1</version.spring-boot>
-		<version.spring-security>6.0.1</version.spring-security>
+		<version.spring-boot>3.0.4</version.spring-boot>
+		<version.spring-security>6.0.3</version.spring-security>
 		<version.spring-test>6.0.4</version.spring-test>
 		<version.testcontainers-keycloak>2.3.0</version.testcontainers-keycloak>
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
-		
+
 		<sonar.projectKey>jidoka-be_jdk-keycloak-admin</sonar.projectKey>
 		<sonar.organization>jidoka-be</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
