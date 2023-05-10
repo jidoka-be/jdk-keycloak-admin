@@ -6,6 +6,7 @@ import be.jidoka.jdk.keycloak.admin.domain.CreateUserCommand;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUsersRequest;
 import be.jidoka.jdk.keycloak.admin.domain.RemoveClientRoleFromUserCommand;
+import be.jidoka.jdk.keycloak.admin.domain.SearchUserByClientRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserByRealmRoleRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SearchUserRequest;
 import be.jidoka.jdk.keycloak.admin.domain.SendUserActionEmailRequest;
@@ -76,6 +77,16 @@ public class KeycloakUserAdminService {
 		);
 	}
 
+	public Set<User> searchUsersByClientRole(SearchUserByClientRoleRequest request) {
+		return clientsResource.get(request.getClientId()).roles()
+				.get(request.getRoleName())
+				.getRoleUserMembers()
+				.stream()
+				.map(user -> enhanceWithClientRoles(user, request.getClientId()))
+				.map(user -> new User(user, request.getClientId()))
+				.collect(Collectors.toSet());
+	}
+
 	public Set<User> searchUsersByRealmRole(SearchUserByRealmRoleRequest request) {
 		int page = 0;
 		int pageSize = 100;
@@ -88,7 +99,7 @@ public class KeycloakUserAdminService {
 			roleUserMembers.addAll(currentPage);
 			currentPageSize = currentPage.size();
 			page++;
-		} while(currentPageSize == pageSize);
+		} while (currentPageSize == pageSize);
 
 		return roleUserMembers.stream()
 				.map(this::enhanceWithRealmRoles)
