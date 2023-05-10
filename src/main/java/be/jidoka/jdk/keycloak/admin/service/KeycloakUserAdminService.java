@@ -16,9 +16,13 @@ import be.jidoka.jdk.keycloak.admin.domain.UserAction;
 import be.jidoka.jdk.keycloak.admin.domain.UserPersonalDataCommand;
 import org.apache.commons.lang3.StringUtils;
 import org.keycloak.admin.client.resource.ClientsResource;
+import org.keycloak.admin.client.resource.GroupResource;
+import org.keycloak.admin.client.resource.GroupsResource;
+import org.keycloak.admin.client.resource.RoleResource;
 import org.keycloak.admin.client.resource.RolesResource;
 import org.keycloak.admin.client.resource.UserResource;
 import org.keycloak.admin.client.resource.UsersResource;
+import org.keycloak.representations.idm.GroupRepresentation;
 import org.keycloak.representations.idm.RoleRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.data.domain.Page;
@@ -34,6 +38,7 @@ import java.util.Set;
 import java.util.function.IntSupplier;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static be.jidoka.jdk.keycloak.admin.domain.User.PICTURE_URL_ATTRIBUTE;
 import static java.util.Collections.emptyList;
@@ -46,11 +51,13 @@ public class KeycloakUserAdminService {
 	private final UsersResource usersResource;
 	private final ClientsResource clientsResource;
 	private final RolesResource rolesResource;
+	private final GroupsResource groupsResource;
 
-	public KeycloakUserAdminService(UsersResource usersResource, ClientsResource clientsResource, RolesResource rolesResource) {
+	public KeycloakUserAdminService(UsersResource usersResource, ClientsResource clientsResource, RolesResource rolesResource, GroupsResource groupsResource) {
 		this.usersResource = usersResource;
 		this.clientsResource = clientsResource;
 		this.rolesResource = rolesResource;
+		this.groupsResource = groupsResource;
 	}
 
 	public Page<User> getUsers(GetUsersRequest request) {
@@ -78,13 +85,39 @@ public class KeycloakUserAdminService {
 	}
 
 	public Set<User> searchUsersByClientRole(SearchUserByClientRoleRequest request) {
-		return clientsResource.get(request.getClientId()).roles()
-				.get(request.getRoleName())
-				.getRoleUserMembers()
-				.stream()
+		return Stream.concat(
+						getUserRepresentationsWithImplicitRole(request),
+						getUserRepresentationsWithExplicitRole(request)
+				)
 				.map(user -> enhanceWithClientRoles(user, request.getClientId()))
 				.map(user -> new User(user, request.getClientId()))
 				.collect(Collectors.toSet());
+	}
+
+	private Stream<UserRepresentation> getUserRepresentationsWithExplicitRole(SearchUserByClientRoleRequest request) {
+		RolesResource rolesResource = clientsResource.get(request.getClientId()).roles();
+
+		if (rolesResource.list().stream().anyMatch(roleRepresentation -> roleRepresentation.getName().equals(request.getRoleName()))) {
+			RoleResource roleResource = rolesResource.get(request.getRoleName());
+
+			return roleResource.getRoleUserMembers().stream();
+		}
+
+		return Stream.of();
+	}
+
+	private Stream<UserRepresentation> getUserRepresentationsWithImplicitRole(SearchUserByClientRoleRequest request) {
+		List<GroupRepresentation> groupsWithGivenRole = groupsResource.groups().stream()
+				.map(groupRepresentation -> enhanceWithClientRoles(groupRepresentation, request.getClientId()))
+				.filter(groupRepresentation -> groupRepresentation.getClientRoles().get(request.getClientId()).contains(request.getRoleName()))
+				.toList();
+
+		return groupsWithGivenRole.stream()
+				.flatMap(
+						groupRepresentation -> groupsResource.group(groupRepresentation.getId())
+								.members()
+								.stream()
+				);
 	}
 
 	public Set<User> searchUsersByRealmRole(SearchUserByRealmRoleRequest request) {
@@ -254,6 +287,20 @@ public class KeycloakUserAdminService {
 		);
 
 		return userWithRoles;
+	}
+
+	private GroupRepresentation enhanceWithClientRoles(GroupRepresentation groupRepresentation, String clientId) {
+		GroupResource groupResource = groupsResource.group(groupRepresentation.getId());
+		List<RoleRepresentation> clientRoles = groupResource.roles().clientLevel(clientId).listEffective();
+		GroupRepresentation groupWithRoles = groupResource.toRepresentation();
+
+		groupWithRoles.setClientRoles(
+				Map.of(clientId, clientRoles.stream()
+						.map(RoleRepresentation::getName)
+						.collect(Collectors.toList()))
+		);
+
+		return groupWithRoles;
 	}
 
 	private Map<String, List<String>> getPersonalData(UserPersonalDataCommand command) {
