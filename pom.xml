@@ -52,16 +52,17 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<version.assertj-core>3.23.1</version.assertj-core>
+		<version.assertj-core>3.24.2</version.assertj-core>
 		<version.commons-lang3>3.12.0</version.commons-lang3>
-		<version.junit-jupiter>1.17.3</version.junit-jupiter>
-		<version.junit-jupiter-engine>5.9.0</version.junit-jupiter-engine>
+		<version.junit-jupiter>1.18.0</version.junit-jupiter>
+		<version.junit-jupiter-engine>5.9.3</version.junit-jupiter-engine>
 		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
-		<version.lombok>1.18.24</version.lombok>
-		<version.spring-boot>3.0.4</version.spring-boot>
+		<version.lombok>1.18.26</version.lombok>
+		<version.spring-boot>3.0.6</version.spring-boot>
+		<version.spring-data>3.0.5</version.spring-data>
 		<version.spring-security>6.0.3</version.spring-security>
-		<version.spring-test>6.0.4</version.spring-test>
-		<version.testcontainers-keycloak>2.3.0</version.testcontainers-keycloak>
+		<version.spring-test>6.0.8</version.spring-test>
+		<version.testcontainers-keycloak>2.5.0</version.testcontainers-keycloak>
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
 
@@ -248,7 +249,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-commons</artifactId>
-			<version>${version.spring-boot}</version>
+			<version>${version.spring-data}</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
