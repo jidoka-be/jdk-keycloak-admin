@@ -15,3 +15,8 @@ Updated Java SDK to 17.
 
 Update Spring support to Spring Boot 3.x and Spring Framework 6.x.
 This library can now be used with Keycloak version 20.
+
+# 2.1.0
+
+Bump all libraries expect for Keycloak (still supporting version 20).
+Add ability to search Users by client role.
