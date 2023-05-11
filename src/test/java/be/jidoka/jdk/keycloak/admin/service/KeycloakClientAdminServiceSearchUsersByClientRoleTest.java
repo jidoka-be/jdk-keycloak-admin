@@ -61,7 +61,7 @@ class KeycloakClientAdminServiceSearchUsersByClientRoleTest extends IntegrationT
 		SearchUserByClientRoleRequest searchRequest = SearchUserByClientRoleRequestBuilder.builder().clientId(clientId).roleName(ANOTHER_ROLE_NAME).build();
 
 		Set<User> actual = keycloakUserAdminService.searchUsersByClientRole(searchRequest);
-		assertThat(actual.size()).isEqualTo(userIdsWithExplicitRole.size());
+		assertThat(actual).hasSameSizeAs(userIdsWithExplicitRole);
 		assertThat(actual).extracting("id").containsExactlyInAnyOrderElementsOf(userIdsWithExplicitRole);
 	}
 
@@ -70,7 +70,7 @@ class KeycloakClientAdminServiceSearchUsersByClientRoleTest extends IntegrationT
 		SearchUserByClientRoleRequest searchRequest = SearchUserByClientRoleRequestBuilder.builder().clientId(TEST_APP_CLIENT_ID).roleName(TEST_APP_ROLE_NAME).build();
 
 		Set<User> actual = keycloakUserAdminService.searchUsersByClientRole(searchRequest);
-		assertThat(actual.size()).isEqualTo(userIdsWithImplicitRole.size());
+		assertThat(actual).hasSameSizeAs(userIdsWithImplicitRole);
 		assertThat(actual).extracting("id").containsExactlyInAnyOrderElementsOf(userIdsWithImplicitRole);
 	}
 
@@ -91,7 +91,6 @@ class KeycloakClientAdminServiceSearchUsersByClientRoleTest extends IntegrationT
 
 				keycloakUserAdminService.addClientRoleToUser(request);
 				userIdsWithExplicitRole.add(userId);
-
 			} else {
 				UserResource userResource = usersResource.get(userId);
 				userResource.joinGroup("8c531922-fe67-4183-b2a3-50e79a310d1a");
