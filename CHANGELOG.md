@@ -20,3 +20,7 @@ This library can now be used with Keycloak version 20.
 
 Bump all libraries expect for Keycloak (still supporting version 20).
 Add ability to search Users by client role.
+
+# 2.2.0
+
+When searching Users by client role, implicit inherited roles will be returned as well as the before explicit ones.
