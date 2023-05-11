@@ -279,6 +279,16 @@
           "attributes": {}
         }
       ],
+      "testapp": [
+        {
+          "id": "46d59aa5-b8b2-4f68-a9c5-529c97b11f09",
+          "name": "TEST_MANAGER",
+          "composite": false,
+          "clientRole": true,
+          "containerId": "ec57c160-51f3-48dd-81f8-49abcc070fd5",
+          "attributes": {}
+        }
+      ],
       "security-admin-console": [],
       "admin-cli": [],
       "account-console": [],
@@ -365,7 +375,21 @@
       ]
     }
   },
-  "groups": [],
+  "groups": [
+    {
+      "id": "8c531922-fe67-4183-b2a3-50e79a310d1a",
+      "name": "testapp-test-manager-group",
+      "path": "/testapp-test-manager-group",
+      "attributes": {},
+      "realmRoles": [],
+      "clientRoles": {
+        "testapp": [
+          "TEST_MANAGER"
+        ]
+      },
+      "subGroups": []
+    }
+  ],
   "defaultRoles": [
     "uma_authorization",
     "offline_access"
@@ -460,6 +484,63 @@
     ]
   },
   "clients": [
+    {
+      "id": "ec57c160-51f3-48dd-81f8-49abcc070fd5",
+      "clientId": "testapp",
+      "name": "Test App",
+      "description": "",
+      "rootUrl": "http://localhost:1234",
+      "baseUrl": "http://localhost:1234",
+      "surrogateAuthRequired": false,
+      "enabled": true,
+      "alwaysDisplayInConsole": false,
+      "clientAuthenticatorType": "client-secret",
+      "redirectUris": [
+        "*"
+      ],
+      "webOrigins": [
+        "*"
+      ],
+      "notBefore": 0,
+      "bearerOnly": false,
+      "consentRequired": false,
+      "standardFlowEnabled": true,
+      "implicitFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "serviceAccountsEnabled": false,
+      "publicClient": true,
+      "frontchannelLogout": true,
+      "protocol": "openid-connect",
+      "attributes": {
+        "oidc.ciba.grant.enabled": "false",
+        "backchannel.logout.session.required": "true",
+        "post.logout.redirect.uris": "*",
+        "display.on.consent.screen": "false",
+        "oauth2.device.authorization.grant.enabled": "false",
+        "backchannel.logout.revoke.offline.tokens": "false"
+      },
+      "authenticationFlowBindingOverrides": {},
+      "fullScopeAllowed": true,
+      "nodeReRegistrationTimeout": -1,
+      "defaultClientScopes": [
+        "web-origins",
+        "acr",
+        "profile",
+        "roles",
+        "email"
+      ],
+      "optionalClientScopes": [
+        "address",
+        "phone",
+        "offline_access",
+        "microprofile-jwt"
+      ],
+      "access": {
+        "view": true,
+        "configure": true,
+        "manage": true
+      }
+    },
     {
       "id": "566100e7-6690-44be-a8e9-dd0476658965",
       "clientId": "account",

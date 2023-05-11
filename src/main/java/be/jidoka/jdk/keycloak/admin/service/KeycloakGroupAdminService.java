@@ -16,7 +16,7 @@ public class KeycloakGroupAdminService {
 	}
 
 	public Set<User> getMembers(GetGroupMembersRequest request) {
-		return groupsResource.group(request.getGroupName()).members().stream()
+		return groupsResource.group(request.getGroupId()).members().stream()
 				.map(userRepresentation -> new User(userRepresentation, null))
 				.collect(Collectors.toSet());
 	}
