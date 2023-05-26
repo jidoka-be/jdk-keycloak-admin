@@ -58,7 +58,7 @@
 		<version.junit-jupiter-engine>5.9.3</version.junit-jupiter-engine>
 		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
 		<version.lombok>1.18.26</version.lombok>
-		<version.spring-boot>3.0.6</version.spring-boot>
+		<version.spring-boot>3.0.7</version.spring-boot>
 		<version.spring-data>3.0.5</version.spring-data>
 		<version.spring-security>6.0.3</version.spring-security>
 		<version.spring-test>6.0.8</version.spring-test>
