@@ -53,17 +53,25 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<version.assertj-core>3.24.2</version.assertj-core>
-		<version.commons-lang3>3.12.0</version.commons-lang3>
-		<version.junit-jupiter>1.18.0</version.junit-jupiter>
-		<version.junit-jupiter-engine>5.9.3</version.junit-jupiter-engine>
+		<version.commons-lang3>3.14.0</version.commons-lang3>
+		<version.junit-jupiter>1.19.3</version.junit-jupiter>
+		<version.junit-jupiter-engine>5.10.1</version.junit-jupiter-engine>
 		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
-		<version.lombok>1.18.26</version.lombok>
-		<version.spring-boot>3.0.6</version.spring-boot>
-		<version.spring-data>3.0.5</version.spring-data>
-		<version.spring-security>6.0.3</version.spring-security>
-		<version.spring-test>6.0.8</version.spring-test>
-		<version.testcontainers-keycloak>2.5.0</version.testcontainers-keycloak>
-		<version.versions-plugin>2.16.2</version.versions-plugin>
+		<version.lombok>1.18.30</version.lombok>
+		<version.spring-boot>3.2.0</version.spring-boot>
+		<version.spring-data>3.2.1</version.spring-data>
+		<version.spring-security>6.2.1</version.spring-security>
+		<version.spring-test>6.1.2</version.spring-test>
+		<version.testcontainers-keycloak>3.2.0</version.testcontainers-keycloak>
+
+		<version.plugin.versions>2.16.2</version.plugin.versions>
+		<version.plugin.sonar>3.10.0.2594</version.plugin.sonar>
+		<version.plugin.jacoco>0.8.11</version.plugin.jacoco>
+		<version.plugin.compiler>3.12.0</version.plugin.compiler>
+		<version.plugin.resources>3.3.1</version.plugin.resources>
+		<version.plugin.surefire>3.2.3</version.plugin.surefire>
+		<version.plugin.dependency-check>9.0.7</version.plugin.dependency-check>
+
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
 
@@ -79,12 +87,17 @@
 				<plugin>
 					<groupId>org.sonarsource.scanner.maven</groupId>
 					<artifactId>sonar-maven-plugin</artifactId>
-					<version>3.9.1.2184</version>
+					<version>${version.plugin.sonar}</version>
 				</plugin>
 				<plugin>
 					<groupId>org.jacoco</groupId>
 					<artifactId>jacoco-maven-plugin</artifactId>
-					<version>0.8.8</version>
+					<version>${version.plugin.jacoco}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${version.plugin.versions}</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -93,7 +106,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.10.1</version>
+				<version>${version.plugin.compiler}</version>
 				<configuration>
 					<source>17</source>
 					<target>17</target>
@@ -102,17 +115,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-resources-plugin</artifactId>
-				<version>3.3.0</version>
+				<version>${version.plugin.resources}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
+				<version>${version.plugin.surefire}</version>
 			</plugin>
 			<plugin>
 				<groupId>org.owasp</groupId>
 				<artifactId>dependency-check-maven</artifactId>
-				<version>8.0.1</version>
+				<version>${version.plugin.dependency-check}</version>
 				<configuration>
 					<failBuildOnCVSS>8</failBuildOnCVSS>
 					<suppressionFile>owasp-dependency-check-supressions.xml</suppressionFile>
@@ -216,18 +229,6 @@
 			</build>
 		</profile>
 	</profiles>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.codehaus.mojo</groupId>
-					<artifactId>versions-maven-plugin</artifactId>
-					<version>${version.versions-plugin}</version>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 
 
 	<dependencies>
