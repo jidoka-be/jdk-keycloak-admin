@@ -56,7 +56,6 @@
 		<version.commons-lang3>3.14.0</version.commons-lang3>
 		<version.junit-jupiter>1.19.3</version.junit-jupiter>
 		<version.junit-jupiter-engine>5.10.1</version.junit-jupiter-engine>
-		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
 		<version.lombok>1.18.30</version.lombok>
 		<version.spring-boot>3.2.0</version.spring-boot>
 		<version.spring-data>3.2.1</version.spring-data>
@@ -71,6 +70,9 @@
 		<version.plugin.resources>3.3.1</version.plugin.resources>
 		<version.plugin.surefire>3.2.3</version.plugin.surefire>
 		<version.plugin.dependency-check>9.0.7</version.plugin.dependency-check>
+
+		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
+		<docker.image.keycloak>quay.io/keycloak/keycloak:20.0.3</docker.image.keycloak>
 
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
@@ -121,6 +123,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${version.plugin.surefire}</version>
+				<configuration>
+					<systemPropertyVariables>
+						<docker.image.keycloak>${docker.image.keycloak}</docker.image.keycloak>
+					</systemPropertyVariables>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.owasp</groupId>

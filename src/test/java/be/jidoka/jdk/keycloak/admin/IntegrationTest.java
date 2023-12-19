@@ -15,6 +15,8 @@ import org.testcontainers.containers.Network;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import static java.lang.System.getProperty;
+
 @Testcontainers
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = { KeycloakAdminAutoConfiguration.class }, initializers = IntegrationTest.Initializer.class)
@@ -29,7 +31,7 @@ public abstract class IntegrationTest {
 			.withNetwork(network)
 			.waitingFor(Wait.forListeningPort());
 
-	private static KeycloakContainer keycloak = new KeycloakContainer("quay.io/keycloak/keycloak:20.0.3")
+	private static KeycloakContainer keycloak = new KeycloakContainer(getProperty("docker.image.keycloak"))
 			.withContextPath("/auth")
 			.withRealmImportFiles("/realm-export.json")
 			.withNetwork(network);
