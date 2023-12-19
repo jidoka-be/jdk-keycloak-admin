@@ -63,6 +63,7 @@
 		<version.spring-security>6.0.3</version.spring-security>
 		<version.spring-test>6.0.8</version.spring-test>
 		<version.testcontainers-keycloak>2.5.0</version.testcontainers-keycloak>
+		<version.versions-plugin>2.16.2</version.versions-plugin>
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
 
@@ -215,6 +216,19 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.codehaus.mojo</groupId>
+					<artifactId>versions-maven-plugin</artifactId>
+					<version>${version.versions-plugin}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
 
 	<dependencies>
 		<dependency>
