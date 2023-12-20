@@ -72,7 +72,7 @@
 		<version.plugin.dependency-check>9.0.7</version.plugin.dependency-check>
 
 		<version.keycloak-admin-client>20.0.3</version.keycloak-admin-client>
-		<docker.image.keycloak>quay.io/keycloak/keycloak:20.0.3</docker.image.keycloak>
+		<docker.image.keycloak>quay.io/keycloak/keycloak:22.0.5</docker.image.keycloak>
 
 		<activation.version>1.1.1</activation.version>
 		<jakarta.activation.version>2.0.1</jakarta.activation.version>
