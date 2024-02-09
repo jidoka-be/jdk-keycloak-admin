@@ -2,11 +2,11 @@ package be.jidoka.jdk.keycloak.admin.service;
 
 import be.jidoka.jdk.keycloak.admin.IntegrationTest;
 import be.jidoka.jdk.keycloak.admin.domain.GetUserRequestBuilder;
+import jakarta.ws.rs.NotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.ws.rs.NotFoundException;
 import java.util.UUID;
 
 import static be.jidoka.jdk.keycloak.admin.domain.CreateUserCommandFixture.aafkeBorrenbergs;
