@@ -73,6 +73,7 @@
 		<version.plugin.maven-source>3.3.1</version.plugin.maven-source>
 		<version.plugin.maven-javadoc>3.8.0</version.plugin.maven-javadoc>
 		<version.plugin.maven-gpg>3.2.4</version.plugin.maven-gpg>
+		<version.plugin.nexus-staging>1.6.13</version.plugin.nexus-staging>
 
 		<version.keycloak-admin-client>23.0.3</version.keycloak-admin-client>
 		<docker.image.keycloak>quay.io/keycloak/keycloak:23.0.3</docker.image.keycloak>
@@ -224,7 +225,7 @@
 					<plugin>
 						<groupId>org.sonatype.plugins</groupId>
 						<artifactId>nexus-staging-maven-plugin</artifactId>
-						<version>1.6.13</version>
+						<version>${version.plugin.nexus-staging}</version>
 						<extensions>true</extensions>
 						<configuration>
 							<serverId>ossrh</serverId>
@@ -236,7 +237,6 @@
 			</build>
 		</profile>
 	</profiles>
-
 
 	<dependencies>
 		<dependency>
