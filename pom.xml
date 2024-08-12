@@ -74,9 +74,6 @@
 		<version.keycloak-admin-client>23.0.3</version.keycloak-admin-client>
 		<docker.image.keycloak>quay.io/keycloak/keycloak:23.0.3</docker.image.keycloak>
 
-		<activation.version>1.1.1</activation.version>
-		<jakarta.activation.version>2.0.1</jakarta.activation.version>
-
 		<sonar.projectKey>jidoka-be_jdk-keycloak-admin</sonar.projectKey>
 		<sonar.organization>jidoka-be</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -273,16 +270,6 @@
 			<artifactId>spring-data-commons</artifactId>
 			<version>${version.spring-data}</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>javax.activation</groupId>
-			<artifactId>activation</artifactId>
-			<version>${activation.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.activation</groupId>
-			<artifactId>jakarta.activation</artifactId>
-			<version>${jakarta.activation.version}</version>
 		</dependency>
 
 		<dependency>
