@@ -42,7 +42,7 @@ jobs:
         with:
           servers: '[{ "id": "ossrh", "username": "${{ secrets.OSSRH_USER }}", "password": "${{ secrets.OSSRH_PASSWORD }}" }]'
       - name: Build artifact and perform Sonar analysis
-        run: echo 'Build artifact and perform Sonar analysis' && ./mvnw --batch-mode clean verify sonar:sonar -Dsonar.login="${{ secrets.SONAR_LOGIN }}" -P coverage
+        run: echo 'Build artifact and perform Sonar analysis' && ./mvnw --batch-mode clean verify sonar:sonar -Dsonar.login="${{ secrets.SONAR_LOGIN }}" -DnvdApiKey="${{ secrets.NVD_API_KEY }}" -P coverage
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - if: steps.get_branch.outputs.branch == 'master'
