@@ -29,3 +29,8 @@ When searching Users by client role, implicit inherited roles will be returned a
 
 Bump all libraries
 Update keycloak version to 23.0.3
+
+# 2.4.0
+
+Bump all libraries
+Update keycloak version to 25.0.2
