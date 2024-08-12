@@ -55,7 +55,7 @@
 		<version.assertj-core>3.26.3</version.assertj-core>
 		<version.commons-lang3>3.16.0</version.commons-lang3>
 		<version.junit-jupiter>1.19.3</version.junit-jupiter>
-		<version.junit-jupiter-engine>5.10.1</version.junit-jupiter-engine>
+		<version.junit-jupiter-engine>5.10.3</version.junit-jupiter-engine>
 		<version.lombok>1.18.30</version.lombok>
 		<version.spring-boot>3.2.0</version.spring-boot>
 		<version.spring-data>3.2.1</version.spring-data>
