@@ -61,7 +61,7 @@
 		<version.spring-data>3.3.2</version.spring-data>
 		<version.spring-security>6.3.1</version.spring-security>
 		<version.spring-test>6.1.11</version.spring-test>
-		<version.testcontainers-keycloak>3.2.0</version.testcontainers-keycloak>
+		<version.testcontainers-keycloak>3.4.0</version.testcontainers-keycloak>
 
 		<version.plugin.versions>2.17.1</version.plugin.versions>
 		<version.plugin.sonar>4.0.0.4121</version.plugin.sonar>
@@ -75,8 +75,8 @@
 		<version.plugin.maven-gpg>3.2.4</version.plugin.maven-gpg>
 		<version.plugin.nexus-staging>1.6.13</version.plugin.nexus-staging>
 
-		<version.keycloak-admin-client>23.0.3</version.keycloak-admin-client>
-		<docker.image.keycloak>quay.io/keycloak/keycloak:23.0.3</docker.image.keycloak>
+		<version.keycloak-admin-client>25.0.2</version.keycloak-admin-client>
+		<docker.image.keycloak>quay.io/keycloak/keycloak:${version.keycloak-admin-client}</docker.image.keycloak>
 
 		<sonar.projectKey>jidoka-be_jdk-keycloak-admin</sonar.projectKey>
 		<sonar.organization>jidoka-be</sonar.organization>

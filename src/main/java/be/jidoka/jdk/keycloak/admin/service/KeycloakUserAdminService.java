@@ -169,18 +169,18 @@ public class KeycloakUserAdminService {
 	 * Otherwise this will be silently discarded, no update on this field.
 	 */
 	public void updateUser(UpdateUserCommand command) {
-		var userRepresentation = new UserRepresentation();
-		command.getEnabled().ifPresent(userRepresentation::setEnabled);
-		command.getUsername().ifPresent(userRepresentation::setUsername);
-		command.getFirstName().ifPresent(userRepresentation::setFirstName);
-		command.getLastName().ifPresent(userRepresentation::setLastName);
-		command.getEmail().ifPresent(userRepresentation::setEmail);
-		userRepresentation.setAttributes(getPersonalData(command));
-		userRepresentation.setRequiredActions(getActions(command.getRequiredUserActions()));
-
 		var userResource = usersResource.get(command.getUserId());
+		var userRepresentation = userResource.toRepresentation();
+		var updatedUserRepresentation = new UserRepresentation();
+		updatedUserRepresentation.setEnabled(command.getEnabled().orElse(userRepresentation.isEnabled()));
+		updatedUserRepresentation.setUsername(command.getUsername().orElse(userRepresentation.getUsername()));
+		updatedUserRepresentation.setFirstName(command.getFirstName().orElse(userRepresentation.getFirstName()));
+		updatedUserRepresentation.setLastName(command.getLastName().orElse(userRepresentation.getLastName()));
+		updatedUserRepresentation.setEmail(command.getEmail().orElse(userRepresentation.getEmail()));
+		updatedUserRepresentation.setAttributes(getPersonalData(command));
+		updatedUserRepresentation.setRequiredActions(getActions(command.getRequiredUserActions()));
 
-		userResource.update(userRepresentation);
+		userResource.update(updatedUserRepresentation);
 	}
 
 	/**

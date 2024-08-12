@@ -43,7 +43,7 @@ public abstract class IntegrationTest {
 			keycloak.start();
 			TestPropertySourceUtils.addInlinedPropertiesToEnvironment(
 					applicationContext,
-					"keycloak-admin.auth-server-url=http://" + keycloak.getContainerIpAddress() + ":" + keycloak.getFirstMappedPort() + "/auth",
+					"keycloak-admin.auth-server-url=http://" + keycloak.getHost() + ":" + keycloak.getFirstMappedPort() + "/auth",
 					"keycloak-admin.realm=keycloak-admin-service",
 					"keycloak-admin.client-id=idm-client",
 					"keycloak-admin.client-secret=5fbe8f96-a638-4bea-8f54-210c83f3ad63"
