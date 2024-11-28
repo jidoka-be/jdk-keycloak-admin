@@ -63,7 +63,7 @@
 		<version.spring-test>6.2.0</version.spring-test>
 		<version.testcontainers-keycloak>3.5.1</version.testcontainers-keycloak>
 
-		<version.plugin.versions>2.17.1</version.plugin.versions>
+		<version.plugin.versions>2.18.0</version.plugin.versions>
 		<version.plugin.sonar>4.0.0.4121</version.plugin.sonar>
 		<version.plugin.jacoco>0.8.12</version.plugin.jacoco>
 		<version.plugin.compiler>3.13.0</version.plugin.compiler>
