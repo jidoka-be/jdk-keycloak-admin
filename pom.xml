@@ -73,7 +73,7 @@
 		<version.plugin.maven-source>3.3.1</version.plugin.maven-source>
 		<version.plugin.maven-javadoc>3.11.1</version.plugin.maven-javadoc>
 		<version.plugin.maven-gpg>3.2.7</version.plugin.maven-gpg>
-		<version.plugin.nexus-staging>1.6.13</version.plugin.nexus-staging>
+		<version.plugin.nexus-staging>1.7.0</version.plugin.nexus-staging>
 
 		<version.keycloak-admin-client>26.0.3</version.keycloak-admin-client>
 		<docker.image.keycloak>quay.io/keycloak/keycloak:26.0.6</docker.image.keycloak>
