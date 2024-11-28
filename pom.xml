@@ -75,8 +75,8 @@
 		<version.plugin.maven-gpg>3.2.4</version.plugin.maven-gpg>
 		<version.plugin.nexus-staging>1.6.13</version.plugin.nexus-staging>
 
-		<version.keycloak-admin-client>25.0.2</version.keycloak-admin-client>
-		<docker.image.keycloak>quay.io/keycloak/keycloak:${version.keycloak-admin-client}</docker.image.keycloak>
+		<version.keycloak-admin-client>26.0.3</version.keycloak-admin-client>
+		<docker.image.keycloak>quay.io/keycloak/keycloak:26.0.6</docker.image.keycloak>
 
 		<sonar.projectKey>jidoka-be_jdk-keycloak-admin</sonar.projectKey>
 		<sonar.organization>jidoka-be</sonar.organization>

@@ -4,7 +4,7 @@
 
 Spring auto-configured library to add keycloak admin support.
 
-**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 25.**
+**The dependencies and keycloak docker image in the integration test of this library are currently written for Keycloak 26.**
 **It is important that this library is used with that version of Keycloak.**
 **Future releases of this library can support other versions of Keycloak if dependency versions of Keycloak and the integration test is adapted.**
 
