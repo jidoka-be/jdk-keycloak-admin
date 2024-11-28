@@ -72,7 +72,7 @@
 		<version.plugin.dependency-check>11.1.0</version.plugin.dependency-check>
 		<version.plugin.maven-source>3.3.1</version.plugin.maven-source>
 		<version.plugin.maven-javadoc>3.11.1</version.plugin.maven-javadoc>
-		<version.plugin.maven-gpg>3.2.4</version.plugin.maven-gpg>
+		<version.plugin.maven-gpg>3.2.7</version.plugin.maven-gpg>
 		<version.plugin.nexus-staging>1.6.13</version.plugin.nexus-staging>
 
 		<version.keycloak-admin-client>26.0.3</version.keycloak-admin-client>
