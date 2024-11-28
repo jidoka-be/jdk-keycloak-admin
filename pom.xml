@@ -61,7 +61,7 @@
 		<version.spring-data>3.4.0</version.spring-data>
 		<version.spring-security>6.4.1</version.spring-security>
 		<version.spring-test>6.2.0</version.spring-test>
-		<version.testcontainers-keycloak>3.4.0</version.testcontainers-keycloak>
+		<version.testcontainers-keycloak>3.5.1</version.testcontainers-keycloak>
 
 		<version.plugin.versions>2.17.1</version.plugin.versions>
 		<version.plugin.sonar>4.0.0.4121</version.plugin.sonar>
