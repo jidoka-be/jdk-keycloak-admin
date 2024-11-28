@@ -136,7 +136,7 @@
 				<version>${version.plugin.dependency-check}</version>
 				<configuration>
 					<failBuildOnCVSS>8</failBuildOnCVSS>
-					<suppressionFile>owasp-dependency-check-supressions.xml</suppressionFile>
+					<suppressionFile>owasp-dependency-check-suppressions.xml</suppressionFile>
 				</configuration>
 				<executions>
 					<execution>
