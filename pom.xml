@@ -59,7 +59,7 @@
 		<version.lombok>1.18.36</version.lombok>
 		<version.spring-boot>3.4.0</version.spring-boot>
 		<version.spring-data>3.4.0</version.spring-data>
-		<version.spring-security>6.3.1</version.spring-security>
+		<version.spring-security>6.4.1</version.spring-security>
 		<version.spring-test>6.1.11</version.spring-test>
 		<version.testcontainers-keycloak>3.4.0</version.testcontainers-keycloak>
 
