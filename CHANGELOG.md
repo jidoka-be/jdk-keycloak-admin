@@ -34,3 +34,8 @@ Update keycloak version to 23.0.3
 
 Bump all libraries
 Update keycloak version to 25.0.2
+
+# 2.5.0
+
+Bump all libraries
+Update keycloak version to 26.x.x
